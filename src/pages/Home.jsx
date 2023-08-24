@@ -8,7 +8,7 @@ const Home = () => {
   const dispatch = useDispatch();
   return (
     <div className="h-full">
-      <div className="relative z-10 mx-2 my-2 mb-10 flex h-72 flex-col items-center justify-center rounded-2xl bg-orange-500 px-5 py-[13rem]">
+      <div className="relative z-10 mx-2 my-2 mb-10 flex h-72 flex-col items-center justify-center rounded-2xl bg-[#FFB100] px-5 py-[13rem]">
         <div className="text-4xl font-extrabold text-white md:text-6xl">
           RR.
         </div>
@@ -21,10 +21,12 @@ const Home = () => {
           website.
         </p>
         <div className="absolute bottom-0 left-[50%] h-14 w-[calc(100vw-48px)] max-w-[25rem] -translate-x-[50%] translate-y-[60%] rounded-full bg-white shadow-lg"></div>
-        <div className="absolute bottom-0 left-0 right-0 top-0 -z-10 w-full overflow-hidden rounded-2xl bg-black">
+        <div className="absolute bottom-0 left-0 right-0 top-0 -z-10 w-full overflow-hidden rounded-2xl opacity-70">
           <img
             src={headerImg}
             className="h-full w-full rounded-2xl object-cover"
+            loading="lazy"
+            alt=""
           />
         </div>
       </div>
