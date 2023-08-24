@@ -8,6 +8,8 @@ const MenuCard = () => {
         <img
           className="h-32 w-32 rounded-xl object-cover sm:h-44 sm:w-44 md:h-56 md:w-56"
           src="https://placehold.co/600x400"
+          alt=""
+          loading="lazy"
         />
       </figure>
       <div className="px-2 font-semibold">

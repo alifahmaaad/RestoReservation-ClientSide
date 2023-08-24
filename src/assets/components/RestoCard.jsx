@@ -11,6 +11,8 @@ const RestoCard = () => {
           <img
             src="https://placehold.co/600x400"
             className="h-full w-full rounded-xl object-cover lg:h-60 xl:h-64"
+            alt=""
+            loading="lazy"
           />
         </figure>
       </div>
