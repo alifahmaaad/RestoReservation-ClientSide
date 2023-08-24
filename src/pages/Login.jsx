@@ -19,12 +19,14 @@ const Login = () => {
               type="text"
               className="rounded-full border p-2 px-4"
               placeholder="Username"
+              name="username"
             />
             <label htmlFor="password">Password</label>
             <input
               type={showPass ? "text" : "password"}
               className="rounded-full border p-2 px-4"
-              placeholder="Username"
+              placeholder="Password"
+              name="password"
             />
             <div className="flex gap-2">
               <input
