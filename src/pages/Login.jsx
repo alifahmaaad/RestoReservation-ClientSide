@@ -3,7 +3,7 @@ import { useState } from "react";
 const Login = () => {
   const [showPass, setShowPass] = useState(false);
   return (
-    <div className="relative flex h-[calc(100svh-55px)] items-center justify-center overflow-x-hidden bg-white">
+    <div className="relative flex h-[calc(100vh-55px)] items-center justify-center overflow-x-hidden bg-white">
       <div className="relative z-10 flex h-full w-full bg-white py-20 sm:max-h-[35rem] sm:max-w-[30rem] sm:rounded-lg sm:shadow-xl">
         <div className="absolute left-0 top-0 hidden items-center gap-2 p-5 sm:flex">
           <p className="text-3xl font-bold">
@@ -40,9 +40,9 @@ const Login = () => {
               Login
             </button>
           </form>
-          <div className="flex gap-1">
+          <div className="flex gap-1 font-serif">
             <p>No Account?</p>
-            <a className="text-[#FFB100]" href="#">
+            <a className="text-[#FFB100]" href="/register">
               Register
             </a>
           </div>

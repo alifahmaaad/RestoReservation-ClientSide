@@ -20,7 +20,13 @@ const Home = () => {
           You can book restaurant in this website, just one click in our
           website.
         </p>
-        <div className="absolute bottom-0 left-[50%] h-14 w-[calc(100vw-48px)] max-w-[25rem] -translate-x-[50%] translate-y-[60%] rounded-full bg-white shadow-lg"></div>
+        <div className="absolute bottom-0 left-[50%] h-12 w-[calc(100vw-48px)] max-w-[25rem] -translate-x-[50%] translate-y-[60%] rounded-full bg-white shadow-lg">
+          <input
+            type="text"
+            placeholder="Filter Search"
+            className="h-full w-full rounded-full px-10 focus:outline-none"
+          />
+        </div>
         <div className="absolute bottom-0 left-0 right-0 top-0 -z-10 w-full overflow-hidden rounded-2xl opacity-70">
           <img
             src={headerImg}

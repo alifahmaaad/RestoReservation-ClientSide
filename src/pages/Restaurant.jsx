@@ -9,8 +9,8 @@ const Restaurant = () => {
   const [isOpen, setIsOpen] = useState(true);
   return (
     <div className="h-full">
-      <div className="mx-auto flex w-[calc(100%_-_48px)] max-w-screen-xl items-center py-2 md:w-[calc(100%_-_64px)]">
-        <div className="flex aspect-square h-28 w-28 min-w-[7rem] rounded-xl object-cover md:h-32 md:w-32 md:justify-center lg:h-44 lg:w-44">
+      <div className="mx-auto flex w-[calc(100%_-_20px)] max-w-screen-xl items-center py-2 md:w-[calc(100%_-_64px)]">
+        <div className="mx-2 flex aspect-square h-28 w-28 min-w-[7rem] rounded-xl object-cover md:h-32 md:w-32 md:justify-center lg:h-44 lg:w-44">
           <figure>
             <img
               src="https://placehold.co/600x400"
@@ -20,7 +20,7 @@ const Restaurant = () => {
             />
           </figure>
         </div>
-        <div className="h-full w-full py-2 pl-3 pr-4 md:py-3 lg:px-2">
+        <div className="h-full w-full py-2 md:py-3 lg:px-2">
           <div className="flex justify-between gap-2">
             <p className="text-normal font-semibold md:text-2xl " title="">
               Restaurant Name
