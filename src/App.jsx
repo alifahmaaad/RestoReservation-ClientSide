@@ -3,10 +3,12 @@ import Home from "./pages/Home";
 import Restaurant from "./pages/Restaurant";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Navbar from "./assets/components/Navbar";
 
 function App() {
   return (
     <>
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/restaurant" element={<Restaurant />} />
