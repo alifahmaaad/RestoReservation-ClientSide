@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import Reservations from "./pages/Reservations";
 import ReservationForm from "./pages/ReservationForm";
 import MenuForm from "./pages/MenuForm";
+import ModalMenuDetail from "./assets/components/ModalMenuDetail";
 
 function App() {
   const [isTop, setIsTop] = useState(true);
@@ -20,7 +21,7 @@ function App() {
     window.addEventListener("scroll", checkTop);
   });
   return (
-    <>
+    <div className="relative">
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -50,7 +51,7 @@ function App() {
         <p>On Development</p>
       </div> */}
       {/* will be delete after finished */}
-    </>
+    </div>
   );
 }
 
