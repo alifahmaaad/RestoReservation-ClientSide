@@ -1,23 +1,16 @@
 import { useState } from "react";
-import ModalReservationDetail from "./ModalReservationDetails";
-import Approve from "./StatusReservation/Approve";
-import Decline from "./StatusReservation/Decline";
-import Pending from "./StatusReservation/Pending";
+import ModalUserDetail from "./ModalUserDetails";
 
-const ReservationCard = () => {
+const UserCard = () => {
   const [isOpen, SetIsOpen] = useState(false);
   return (
     <div className="relative w-full rounded-md px-5 py-2 font-serif shadow-md">
       <div className="flex flex-wrap items-center justify-between">
         <div>
           <div className="flex flex-wrap items-center gap-2">
-            <p className="font-bold">Restorant Name</p>
-            <Decline />
-            <Approve />
-            <Pending />
+            <p className="font-bold">Full Name</p>
           </div>
-          <p className="">2000-06-02 121:3231:31231</p>
-          <p>Number of guest : 12</p>
+          <p>Username</p>
         </div>
         <div className="flex gap-5">
           <a className="font-mono text-[#e52535] hover:drop-shadow-lg" href="#">
@@ -34,9 +27,9 @@ const ReservationCard = () => {
           </button>
         </div>
       </div>
-      <ModalReservationDetail open={isOpen} />
+      <ModalUserDetail open={isOpen} />
     </div>
   );
 };
 
-export default ReservationCard;
+export default UserCard;

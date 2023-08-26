@@ -9,8 +9,8 @@ import { useEffect, useState } from "react";
 import Reservations from "./pages/Reservations";
 import ReservationForm from "./pages/ReservationForm";
 import MenuForm from "./pages/MenuForm";
-import ModalMenuDetail from "./assets/components/ModalMenuDetail";
 import CreateRestaurant from "./pages/CreateRestaurant";
+import User from "./pages/User";
 
 function App() {
   const [isTop, setIsTop] = useState(true);
@@ -27,6 +27,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/restaurant" element={<Restaurant />} />
+        <Route path="/user" element={<User />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/registerresto" element={<CreateRestaurant />} />
