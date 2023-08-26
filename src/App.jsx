@@ -6,6 +6,7 @@ import Register from "./pages/Register";
 import Navbar from "./assets/components/Navbar";
 import Footer from "./assets/components/Footer";
 import { useEffect, useState } from "react";
+import Reservations from "./pages/Reservations";
 
 function App() {
   const [isTop, setIsTop] = useState(true);
@@ -24,6 +25,7 @@ function App() {
         <Route path="/restaurant" element={<Restaurant />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/reservation" element={<Reservations />} />
       </Routes>
       <Footer />
       <div

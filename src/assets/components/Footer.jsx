@@ -16,7 +16,11 @@ const Footer = () => {
             <div className="flex flex-col justify-center gap-3 px-4 text-white">
               <span>Developed By:</span>
               <span className="px-2">
-                <a className="flex gap-2" target="_blank" href="#">
+                <a
+                  className="flex gap-2"
+                  target="_blank"
+                  href="https://www.linkedin.com/in/alifahmaaad/"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
@@ -33,7 +37,11 @@ const Footer = () => {
                 </a>
               </span>
               <span className="px-2">
-                <a href="#" target="_blank" className="flex gap-2">
+                <a
+                  href="https://github.com/alifahmaaad"
+                  target="_blank"
+                  className="flex gap-2"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
@@ -110,7 +118,7 @@ const Footer = () => {
               />
               <button
                 type="submit"
-                className="rounded-full bg-[#ffedc3] p-2 font-bold text-[#FFB100]"
+                className="rounded-full bg-[#ffedc3] p-2 font-bold text-[#FFB100] hover:scale-105"
               >
                 Send Message
               </button>

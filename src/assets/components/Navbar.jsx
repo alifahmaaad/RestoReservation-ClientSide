@@ -40,7 +40,7 @@ const Navbar = () => {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="/reservation"
                   className="border-b-4 border-[#FFB100] p-2 px-5 font-semibold"
                 >
                   Reservation
