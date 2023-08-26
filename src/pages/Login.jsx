@@ -40,7 +40,7 @@ const Login = () => {
               Login
             </button>
           </form>
-          <div className="flex gap-1 font-serif">
+          <div className="flex gap-1 py-4 font-serif">
             <p>No Account?</p>
             <a className="text-[#FFB100]" href="/register">
               Register
