@@ -1,5 +1,6 @@
 import { useState } from "react";
-const Register = () => {
+
+const CreateRestaurant = () => {
   const [showPass, setShowPass] = useState(false);
   return (
     <div className="relative flex h-[calc(100svh-55px)] items-center justify-center bg-white ">
@@ -12,7 +13,7 @@ const Register = () => {
         </div>
         <div className="flex w-full flex-col items-center justify-center sm:max-w-7xl">
           <p className="py-4 font-serif text-3xl font-bold text-[#FFB100]">
-            Register
+            Restaurant Register
           </p>
           <form
             className="flex h-full w-full flex-col justify-center gap-3 px-10"
@@ -21,11 +22,11 @@ const Register = () => {
               console.log(e.target);
             }}
           >
-            <label htmlFor="fullName">Full Name</label>
+            <label htmlFor="fullName">Restaurant Name</label>
             <input
               type="text"
               className="rounded-md border p-2 px-4"
-              placeholder="Full Name"
+              placeholder="Restorant Name"
               name="fullName"
             />
             <label htmlFor="username">Username</label>
@@ -64,10 +65,10 @@ const Register = () => {
               Register
             </button>
           </form>
-          <div className="flex flex-wrap gap-1 py-4 font-serif">
-            <p>Want to be a partner?</p>
-            <a className="text-[#FFB100]" href="/registerresto">
-              Sign Up as Restaurant Admin
+          <div className="flex gap-1 py-4 font-serif">
+            <p>Sign up as customer?</p>
+            <a className="text-[#FFB100]" href="/register">
+              Register
             </a>
           </div>
         </div>
@@ -76,4 +77,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default CreateRestaurant;

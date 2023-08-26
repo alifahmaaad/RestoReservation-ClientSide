@@ -10,6 +10,7 @@ import Reservations from "./pages/Reservations";
 import ReservationForm from "./pages/ReservationForm";
 import MenuForm from "./pages/MenuForm";
 import ModalMenuDetail from "./assets/components/ModalMenuDetail";
+import CreateRestaurant from "./pages/CreateRestaurant";
 
 function App() {
   const [isTop, setIsTop] = useState(true);
@@ -28,6 +29,7 @@ function App() {
         <Route path="/restaurant" element={<Restaurant />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/registerresto" element={<CreateRestaurant />} />
         <Route path="/reservation" element={<Reservations />} />
         <Route path="/reservation/add" element={<ReservationForm />} />
         <Route path="/menu/add" element={<MenuForm />} />
