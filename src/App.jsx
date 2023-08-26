@@ -8,6 +8,7 @@ import Footer from "./assets/components/Footer";
 import { useEffect, useState } from "react";
 import Reservations from "./pages/Reservations";
 import ReservationForm from "./pages/ReservationForm";
+import MenuForm from "./pages/MenuForm";
 
 function App() {
   const [isTop, setIsTop] = useState(true);
@@ -28,6 +29,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/reservation" element={<Reservations />} />
         <Route path="/reservation/add" element={<ReservationForm />} />
+        <Route path="/menu/add" element={<MenuForm />} />
       </Routes>
       <Footer />
       <div

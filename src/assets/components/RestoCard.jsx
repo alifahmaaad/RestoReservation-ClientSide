@@ -4,7 +4,7 @@ const RestoCard = () => {
   return (
     <a
       className="relative flex flex-row p-2 hover:cursor-pointer hover:shadow-2xl lg:flex-col"
-      href="#"
+      href="/restaurant"
     >
       <div className="flex h-36 w-28 min-w-[7rem] rounded-xl object-cover md:justify-center lg:h-60 lg:w-full xl:h-64">
         <figure>

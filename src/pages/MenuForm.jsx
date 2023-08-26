@@ -1,4 +1,4 @@
-const ReservationForm = () => {
+const MenuForm = () => {
   return (
     <div className="relative flex min-h-[calc(100svh-55px)] items-center justify-center bg-white ">
       <div className="relative z-10 flex h-full w-full bg-white py-5 sm:max-h-[45rem] sm:max-w-[45rem] sm:rounded-lg sm:shadow-xl md:py-20">
@@ -9,8 +9,8 @@ const ReservationForm = () => {
           <p className="font-mono font-bold">RestoReserve</p>
         </div>
         <div className="flex w-full flex-col items-center justify-center sm:max-w-7xl">
-          <p className="font-serif text-3xl font-bold text-[#FFB100]">
-            Reservation
+          <p className="py-4 font-serif text-3xl font-bold text-[#FFB100]">
+            Menu
           </p>
           <form
             className="flex h-full w-full flex-col justify-center gap-3 px-10"
@@ -19,43 +19,40 @@ const ReservationForm = () => {
               console.log(e.target);
             }}
           >
-            <label htmlFor="username">Username</label>
-            <input
-              type="text"
-              className="rounded-md border p-2 px-4"
-              placeholder="username"
-              name="username"
-              value="namanamanamn"
-              disabled
-            />
             <label htmlFor="restaurantname">Restaurant Name</label>
             <input
               type="text"
-              className="rounded-md border p-2 px-4"
+              className="rounded-md border p-2 px-4 before:content-['Hello\_World']"
               placeholder="restaurantname"
               name="restaurantname"
               value="restaurantname"
               disabled
             />
-            <label htmlFor="datetime">Datetime</label>
+            <label htmlFor="name">Menu Name</label>
             <input
-              type="datetime-local"
+              type="text"
               className="rounded-md border p-2 px-4"
-              placeholder="Datetime"
-              name="datetime"
+              placeholder="name"
+              name="name"
             />
-            <label htmlFor="numberofguest">Number of guest</label>
+            <label htmlFor="price">Price</label>
             <input
               type="number"
               className="rounded-md border p-2 px-4 "
               placeholder="Number of guest"
-              name="numberofguest"
+              name="price"
+            />
+            <label htmlFor="description">Description</label>
+            <textarea
+              className="rounded-md border p-2 px-4 "
+              placeholder="Description"
+              name="description"
             />
             <button
               className="rounded-full bg-[#FFB100] py-3 text-white"
               type="submit"
             >
-              Reservation
+              Add Menu
             </button>
           </form>
         </div>
@@ -64,4 +61,4 @@ const ReservationForm = () => {
   );
 };
 
-export default ReservationForm;
+export default MenuForm;
