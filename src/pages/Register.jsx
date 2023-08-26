@@ -64,7 +64,7 @@ const Register = () => {
               Register
             </button>
           </form>
-          <div className="flex gap-1 font-serif">
+          <div className="flex gap-1 py-4 font-serif">
             <p>Want to be a partner?</p>
             <a className="text-[#FFB100]" href="/register">
               Sign Up as Restaurant Admin
