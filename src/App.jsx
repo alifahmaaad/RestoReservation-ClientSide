@@ -9,8 +9,12 @@ import { useEffect, useState } from "react";
 import Reservations from "./pages/Reservations";
 import ReservationForm from "./pages/ReservationForm";
 import MenuForm from "./pages/MenuForm";
-import CreateRestaurant from "./pages/CreateRestaurant";
 import User from "./pages/User";
+import CreateRestaurant from "./pages/CreateRestaurant";
+import UpdateUser from "./pages/UpdateUser";
+import UpdateRestaurant from "./pages/UpdateRestaurant";
+import UpdateMenu from "./pages/UpdateMenu";
+import UpdateReservation from "./pages/UpdateReservation";
 
 function App() {
   const [isTop, setIsTop] = useState(true);
@@ -29,11 +33,19 @@ function App() {
         <Route path="/restaurant" element={<Restaurant />} />
         <Route path="/user" element={<User />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/registerresto" element={<CreateRestaurant />} />
+        <Route path="/register" element={<Register role="Customer" />} />
+        <Route path="/user/update" element={<UpdateUser />} />
+        <Route
+          path="/registerresto"
+          element={<Register role="Restaurant_Admin" />}
+        />
+        <Route path="/registerresto/resto" element={<CreateRestaurant />} />
+        <Route path="/resto/update" element={<UpdateRestaurant />} />
         <Route path="/reservation" element={<Reservations />} />
         <Route path="/reservation/add" element={<ReservationForm />} />
+        <Route path="/reservation/update" element={<UpdateReservation />} />
         <Route path="/menu/add" element={<MenuForm />} />
+        <Route path="/menu/update" element={<UpdateMenu />} />
       </Routes>
       <Footer />
       <div

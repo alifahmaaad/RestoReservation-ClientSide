@@ -1,7 +1,7 @@
 import { useState } from "react";
 import TagLabel from "../assets/components/TagLabel";
 
-const CreateRestaurant = () => {
+const UpdateRestaurant = () => {
   const [showPass, setShowPass] = useState(false);
   const [tags, setTags] = useState([]);
   const [tagText, setTagText] = useState("");
@@ -21,7 +21,7 @@ const CreateRestaurant = () => {
         </div>
         <div className="flex w-full flex-col items-center justify-center sm:max-w-7xl">
           <p className="py-4 font-serif text-3xl font-bold text-[#FFB100]">
-            Restaurant Register
+            Restaurant Update Data
           </p>
           <form
             className="flex h-full w-full flex-col justify-center gap-3 px-10"
@@ -91,7 +91,7 @@ const CreateRestaurant = () => {
               className="rounded-full bg-[#FFB100] py-3 text-white"
               type="submit"
             >
-              Register
+              Update Restaurant Data
             </button>
           </form>
         </div>
@@ -100,4 +100,4 @@ const CreateRestaurant = () => {
   );
 };
 
-export default CreateRestaurant;
+export default UpdateRestaurant;
