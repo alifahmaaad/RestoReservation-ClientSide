@@ -14,6 +14,7 @@ import CreateRestaurant from "./pages/CreateRestaurant";
 import UpdateUser from "./pages/UpdateUser";
 import UpdateRestaurant from "./pages/UpdateRestaurant";
 import UpdateMenu from "./pages/UpdateMenu";
+import UpdateReservation from "./pages/UpdateReservation";
 
 function App() {
   const [isTop, setIsTop] = useState(true);
@@ -42,6 +43,7 @@ function App() {
         <Route path="/resto/update" element={<UpdateRestaurant />} />
         <Route path="/reservation" element={<Reservations />} />
         <Route path="/reservation/add" element={<ReservationForm />} />
+        <Route path="/reservation/update" element={<UpdateReservation />} />
         <Route path="/menu/add" element={<MenuForm />} />
         <Route path="/menu/update" element={<UpdateMenu />} />
       </Routes>
