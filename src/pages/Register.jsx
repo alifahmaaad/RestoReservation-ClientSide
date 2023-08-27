@@ -1,6 +1,16 @@
 import { useState } from "react";
-const Register = () => {
+import { useNavigate } from "react-router-dom";
+const Register = ({ role }) => {
   const [showPass, setShowPass] = useState(false);
+  const navigate = useNavigate();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(e.target);
+    if (role == "Customer") {
+      navigate("/Loginavigate");
+    }
+    navigate("/registerresto/resto");
+  };
   return (
     <div className="relative flex h-[calc(100svh-55px)] items-center justify-center bg-white ">
       <div className="relative z-10 flex h-full w-full bg-white px-4 py-20 sm:max-h-[45rem] sm:max-w-[45rem] sm:rounded-lg sm:shadow-xl">
@@ -12,14 +22,11 @@ const Register = () => {
         </div>
         <div className="flex w-full flex-col items-center justify-center sm:max-w-7xl">
           <p className="py-4 font-serif text-3xl font-bold text-[#FFB100]">
-            Register
+            {role == "Customer" ? "Register" : "Register Admin Restaurant"}
           </p>
           <form
             className="flex h-full w-full flex-col justify-center gap-3 px-10"
-            onSubmit={(e) => {
-              e.preventDefault();
-              console.log(e.target);
-            }}
+            onSubmit={handleSubmit}
           >
             <label htmlFor="fullName">Full Name</label>
             <input
@@ -64,12 +71,21 @@ const Register = () => {
               Register
             </button>
           </form>
-          <div className="flex flex-wrap gap-1 py-4 font-serif">
-            <p>Want to be a partner?</p>
-            <a className="text-[#FFB100]" href="/registerresto">
-              Sign Up as Restaurant Admin
-            </a>
-          </div>
+          {role == "Customer" ? (
+            <div className="flex flex-wrap gap-1 py-4 font-serif">
+              <p>Want to be a partner?</p>
+              <a className="text-[#FFB100]" href="/registerresto">
+                Sign Up as Restaurant Admin
+              </a>
+            </div>
+          ) : (
+            <div className="flex gap-1 py-4 font-serif">
+              <p>Sign up as customer?</p>
+              <a className="text-[#FFB100]" href="/register">
+                Register
+              </a>
+            </div>
+          )}
         </div>
       </div>
     </div>
