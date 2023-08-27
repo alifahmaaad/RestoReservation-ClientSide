@@ -37,7 +37,7 @@ function App() {
         <Route path="/user/update" element={<UpdateUser />} />
         <Route
           path="/registerresto"
-          element={<Register role="Admin_Restaurant" />}
+          element={<Register role="Restaurant_Admin" />}
         />
         <Route path="/registerresto/resto" element={<CreateRestaurant />} />
         <Route path="/resto/update" element={<UpdateRestaurant />} />
