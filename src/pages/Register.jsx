@@ -1,15 +1,36 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 const Register = ({ role }) => {
   const [showPass, setShowPass] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(e.target);
-    if (role == "Customer") {
-      navigate("/Loginavigate");
-    }
-    navigate("/registerresto/resto");
+    const data = new FormData(e.currentTarget);
+    setIsLoading(true);
+    await axios
+      .post("http://localhost:8080/api/user/register", {
+        fullName: data.get("fullName"),
+        username: data.get("username"),
+        email: data.get("email"),
+        password: data.get("password"),
+        role: role,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+        if (role == "Admin_Restaurant") {
+          navigate("/registerresto/resto");
+        } else {
+          navigate("/Login");
+        }
+      });
   };
   return (
     <div className="relative flex h-[calc(100svh-55px)] items-center justify-center bg-white ">
@@ -20,6 +41,12 @@ const Register = ({ role }) => {
           </p>
           <p className="font-mono font-bold">RestoReserve</p>
         </div>
+        {isLoading && (
+          <div className="absolute right-0 top-0 m-5  flex items-center gap-2">
+            <p className="text-sm font-bold">Loading</p>
+            <div className="h-5 w-5 animate-spin rounded-full border-t-2 border-black" />
+          </div>
+        )}
         <div className="flex w-full flex-col items-center justify-center sm:max-w-7xl">
           <p className="py-4 font-serif text-3xl font-bold text-[#FFB100]">
             {role == "Customer" ? "Register" : "Register Admin Restaurant"}
@@ -34,6 +61,7 @@ const Register = ({ role }) => {
               className="rounded-md border p-2 px-4"
               placeholder="Full Name"
               name="fullName"
+              required
             />
             <label htmlFor="username">Username</label>
             <input
@@ -41,6 +69,11 @@ const Register = ({ role }) => {
               className="rounded-md border p-2 px-4"
               placeholder="Username"
               name="username"
+              required
+              pattern="^\S+$"
+              title="Space Not Allowed"
+              min={5}
+              max={15}
             />
             <label htmlFor="email">E-mail</label>
             <input
@@ -48,6 +81,7 @@ const Register = ({ role }) => {
               className="rounded-md border p-2 px-4"
               placeholder="email"
               name="email"
+              required
             />
             <label htmlFor="password">Password</label>
             <input
@@ -55,6 +89,8 @@ const Register = ({ role }) => {
               className="rounded-md border p-2 px-4"
               placeholder="Password"
               name="password"
+              required
+              minLength={8}
             />
             <div className="flex gap-2">
               <input
