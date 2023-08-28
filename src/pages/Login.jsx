@@ -1,15 +1,16 @@
 import axios from "axios";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import ErrorLabel from "../assets/components/ErrorLabel";
 import { set } from "../redux/slices/dataUserResponse";
+import SuccessLabel from "../assets/components/SuccessLabel";
 
 const Login = () => {
   const [showPass, setShowPass] = useState(false);
-  const [dataRes, setDataRes] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setError] = useState([]);
+  const [successMsg, setSuccess] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
@@ -22,14 +23,15 @@ const Login = () => {
         password: data.get("password"),
       })
       .then((res) => {
-        setDataRes(res.data);
-        if (res.data.status) {
-          dispatch(set(res.data.payload));
-          navigate("/");
-        }
+        setSuccess([...successMsg, res.data.message]);
+        setTimeout(() => {
+          if (res.data.status) {
+            dispatch(set(res.data.payload));
+            navigate("/");
+          }
+        }, 1000);
       })
       .catch((error) => {
-        console.log(typeof errorMsg);
         setError([...errorMsg, error.response.data.message]);
       })
       .finally(() => {
@@ -39,6 +41,7 @@ const Login = () => {
   return (
     <div className="relative flex h-[calc(100vh-55px)] items-center justify-center overflow-x-hidden bg-white">
       <div className="relative z-10 flex h-full w-full bg-white py-20 sm:max-h-[35rem] sm:max-w-[30rem] sm:rounded-lg sm:shadow-xl">
+        <SuccessLabel successMsg={successMsg} />
         <ErrorLabel errorMsg={errorMsg} func={() => setError([])} />
         <div className="absolute left-0 top-0 hidden items-center gap-2 p-5 sm:flex">
           <p className="text-3xl font-bold">

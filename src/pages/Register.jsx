@@ -5,8 +5,8 @@ import ErrorLabel from "../assets/components/ErrorLabel";
 const Register = ({ role }) => {
   const [showPass, setShowPass] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [dataRes, setDataRes] = useState();
   const [errorMsg, setError] = useState([]);
+  const [successMsg, setSuccess] = useState([]);
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,11 +21,15 @@ const Register = ({ role }) => {
         role: role,
       })
       .then((res) => {
-        setDataRes(res.data.payload);
-        if (role == "Admin_Restaurant") {
-          navigate("/registerresto/resto");
-        } else {
-          navigate("/Login");
+        if (res.data.status) {
+          setSuccess([...successMsg, res.data.message]);
+          setTimeout(() => {
+            if (role == "Restaurant_Admin") {
+              navigate("/registerresto/resto/" + res.data.payload.id);
+            } else {
+              navigate("/Login");
+            }
+          }, 1000);
         }
       })
       .catch((error) => {
@@ -38,6 +42,7 @@ const Register = ({ role }) => {
   return (
     <div className="relative flex h-[calc(100svh-55px)] items-center justify-center bg-white ">
       <div className="relative z-10 flex h-full w-full bg-white px-4 py-20 sm:max-h-[45rem] sm:max-w-[45rem] sm:rounded-lg sm:shadow-xl">
+        <SuccessLabel successMsg={successMsg} />
         <ErrorLabel errorMsg={errorMsg} func={() => setError([])} />
         <div className="absolute left-0 top-0 hidden items-center gap-2 p-5 sm:flex">
           <p className="text-3xl font-bold">
