@@ -9,7 +9,7 @@ export const dataUserResponse = createSlice({
   reducers: {
     set: (state, action) => {
       state.token = action.payload.token;
-      state.dataUser = action.payload.dataUser;
+      state.dataUser = action.payload.user;
     },
   },
 });

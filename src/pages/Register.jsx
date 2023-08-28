@@ -6,14 +6,14 @@ const Register = ({ role }) => {
   const [showPass, setShowPass] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [dataRes, setDataRes] = useState();
-  const [errorMsg, setError] = useState(["bang bang", "nada"]);
+  const [errorMsg, setError] = useState([]);
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
     setIsLoading(true);
     await axios
-      .post("https://restoreserve.azurewebsites.net//api/user/register", {
+      .post("https://restoreserve.azurewebsites.net/api/user/register", {
         fullName: data.get("fullName"),
         username: data.get("username"),
         email: data.get("email"),

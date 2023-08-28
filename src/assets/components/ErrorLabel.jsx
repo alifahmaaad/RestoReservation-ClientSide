@@ -17,14 +17,15 @@ const ErrorLabel = ({ errorMsg, func }) => {
         </button>
         <div className="flex flex-col flex-wrap items-center justify-center gap-2">
           <p className="py-5 font-serif  font-semibold">Error Message</p>
-          {errorMsg.map((err, i) => (
-            <div
-              key={i}
-              className="rounded-full bg-[#f8e4e4] px-7 font-serif text-sm font-semibold text-[#e52535] md:text-base"
-            >
-              {err}
-            </div>
-          ))}
+          {errorMsg[0] != undefined &&
+            errorMsg[0].map((err, i) => (
+              <div
+                key={i}
+                className="rounded-full bg-[#f8e4e4] px-7 font-serif text-sm font-semibold text-[#e52535] md:text-base"
+              >
+                {err}
+              </div>
+            ))}
         </div>
       </div>
     </div>
