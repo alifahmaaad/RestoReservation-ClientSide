@@ -39,7 +39,10 @@ function App() {
           path="/registerresto"
           element={<Register role="Restaurant_Admin" />}
         />
-        <Route path="/registerresto/resto" element={<CreateRestaurant />} />
+        <Route
+          path="/registerresto/resto/:ownerid"
+          element={<CreateRestaurant />}
+        />
         <Route path="/resto/update" element={<UpdateRestaurant />} />
         <Route path="/reservation" element={<Reservations />} />
         <Route path="/reservation/add" element={<ReservationForm />} />

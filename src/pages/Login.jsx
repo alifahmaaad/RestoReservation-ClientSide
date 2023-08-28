@@ -1,13 +1,16 @@
 import axios from "axios";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import ErrorLabel from "../assets/components/ErrorLabel";
+import { set } from "../redux/slices/dataUserResponse";
+import SuccessLabel from "../assets/components/SuccessLabel";
 
 const Login = () => {
   const [showPass, setShowPass] = useState(false);
-  const [dataRes, setDataRes] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  const dataSelector = useSelector((state) => state.dataUserResponseRedux);
+  const [errorMsg, setError] = useState([]);
+  const [successMsg, setSuccess] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
@@ -15,26 +18,31 @@ const Login = () => {
     const data = new FormData(e.currentTarget);
     setIsLoading(true);
     await axios
-      .post("http://localhost:8080/api/user/login", {
+      .post("https://restoreserve.azurewebsites.net/api/user/login", {
         username: data.get("username"),
         password: data.get("password"),
       })
       .then((res) => {
-        setDataRes(res.data);
-        if (res.data.status) {
-          setIsLoading(false);
-        }
+        setSuccess([...successMsg, res.data.message]);
+        setTimeout(() => {
+          if (res.data.status) {
+            dispatch(set(res.data.payload));
+            navigate("/");
+          }
+        }, 1000);
       })
       .catch((error) => {
-        console.log(error);
+        setError([...errorMsg, error.response.data.message]);
       })
       .finally(() => {
-        navigate("/");
+        setIsLoading(false);
       });
   };
   return (
     <div className="relative flex h-[calc(100vh-55px)] items-center justify-center overflow-x-hidden bg-white">
       <div className="relative z-10 flex h-full w-full bg-white py-20 sm:max-h-[35rem] sm:max-w-[30rem] sm:rounded-lg sm:shadow-xl">
+        <SuccessLabel successMsg={successMsg} />
+        <ErrorLabel errorMsg={errorMsg} func={() => setError([])} />
         <div className="absolute left-0 top-0 hidden items-center gap-2 p-5 sm:flex">
           <p className="text-3xl font-bold">
             RR<b className="text-[#FFB100]">.</b>
@@ -68,11 +76,7 @@ const Login = () => {
               name="password"
             />
             <div className="flex gap-2">
-              <input
-                type="checkbox"
-                onChange={() => setShowPass(!showPass)}
-                className=""
-              />
+              <input type="checkbox" onChange={() => setShowPass(!showPass)} />
               <label htmlFor="showPass">Show Password</label>
             </div>
             <button

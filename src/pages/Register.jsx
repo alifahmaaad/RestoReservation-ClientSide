@@ -1,16 +1,19 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import ErrorLabel from "../assets/components/ErrorLabel";
 const Register = ({ role }) => {
   const [showPass, setShowPass] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMsg, setError] = useState([]);
+  const [successMsg, setSuccess] = useState([]);
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
     setIsLoading(true);
     await axios
-      .post("http://localhost:8080/api/user/register", {
+      .post("https://restoreserve.azurewebsites.net/api/user/register", {
         fullName: data.get("fullName"),
         username: data.get("username"),
         email: data.get("email"),
@@ -18,23 +21,29 @@ const Register = ({ role }) => {
         role: role,
       })
       .then((res) => {
-        console.log(res);
+        if (res.data.status) {
+          setSuccess([...successMsg, res.data.message]);
+          setTimeout(() => {
+            if (role == "Restaurant_Admin") {
+              navigate("/registerresto/resto/" + res.data.payload.id);
+            } else {
+              navigate("/Login");
+            }
+          }, 1000);
+        }
       })
       .catch((error) => {
-        console.log(error);
+        setError([...errorMsg, error.response.data.message]);
       })
       .finally(() => {
         setIsLoading(false);
-        if (role == "Admin_Restaurant") {
-          navigate("/registerresto/resto");
-        } else {
-          navigate("/Login");
-        }
       });
   };
   return (
     <div className="relative flex h-[calc(100svh-55px)] items-center justify-center bg-white ">
       <div className="relative z-10 flex h-full w-full bg-white px-4 py-20 sm:max-h-[45rem] sm:max-w-[45rem] sm:rounded-lg sm:shadow-xl">
+        <SuccessLabel successMsg={successMsg} />
+        <ErrorLabel errorMsg={errorMsg} func={() => setError([])} />
         <div className="absolute left-0 top-0 hidden items-center gap-2 p-5 sm:flex">
           <p className="text-3xl font-bold">
             RR<b className="text-[#FFB100]">.</b>

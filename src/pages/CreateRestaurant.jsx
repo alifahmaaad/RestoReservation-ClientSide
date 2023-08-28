@@ -1,11 +1,14 @@
 import { useState } from "react";
 import TagLabel from "../assets/components/TagLabel";
+import { useParams } from "react-router-dom";
 
 const CreateRestaurant = () => {
   const [showPass, setShowPass] = useState(false);
   const [tags, setTags] = useState([]);
   const [tagText, setTagText] = useState("");
+  const param = useParams();
   const handleDeleteTag = (key) => {
+    console.log(param.ownerid);
     const arr = [...tags];
     arr.splice(key, 1);
     setTags(arr);
