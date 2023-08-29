@@ -3,7 +3,7 @@ const ErrorLabel = ({ errorMsg, func }) => {
     <div
       className={
         errorMsg != 0
-          ? "fixed left-1/2 top-1/2 block h-full w-full -translate-x-1/2  -translate-y-1/2"
+          ? "fixed left-1/2 top-1/2 z-10 block h-full w-full  -translate-x-1/2 -translate-y-1/2"
           : "hidden"
       }
     >
@@ -17,11 +17,11 @@ const ErrorLabel = ({ errorMsg, func }) => {
         </button>
         <div className="flex flex-col flex-wrap items-center justify-center gap-2">
           <p className="py-5 font-serif  font-semibold">Error Message</p>
-          {errorMsg[0] != undefined &&
-            errorMsg[0].map((err, i) => (
+          {errorMsg != undefined &&
+            errorMsg.map((err, i) => (
               <div
                 key={i}
-                className="rounded-full bg-[#f8e4e4] px-7 font-serif text-sm font-semibold text-[#e52535] md:text-base"
+                className="rounded-full bg-[#f8e4e4] px-4 py-2 text-center font-serif text-sm text-[#e52535] md:text-base"
               >
                 {err}
               </div>
