@@ -36,13 +36,10 @@ function App() {
         <Route path="/register" element={<Register role="Customer" />} />
         <Route path="/user/update" element={<UpdateUser />} />
         <Route
-          path="/registerresto"
+          path="/register/resto"
           element={<Register role="Restaurant_Admin" />}
         />
-        <Route
-          path="/registerresto/resto/:ownerid"
-          element={<CreateRestaurant />}
-        />
+        <Route path="/resto/create" element={<CreateRestaurant />} />
         <Route path="/resto/update" element={<UpdateRestaurant />} />
         <Route path="/reservation" element={<Reservations />} />
         <Route path="/reservation/add" element={<ReservationForm />} />

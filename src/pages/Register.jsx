@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import ErrorLabel from "../assets/components/ErrorLabel";
+import SuccessLabel from "../assets/components/SuccessLabel";
 const Register = ({ role }) => {
   const [showPass, setShowPass] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -13,7 +14,8 @@ const Register = ({ role }) => {
     const data = new FormData(e.currentTarget);
     setIsLoading(true);
     await axios
-      .post("https://restoreserve.azurewebsites.net/api/user/register", {
+      .post("http://restoreserve.azurewebsites.net/api/user/register", {
+        // .post("http://localhost:8080/api/user/register", {
         fullName: data.get("fullName"),
         username: data.get("username"),
         email: data.get("email"),
@@ -23,17 +25,23 @@ const Register = ({ role }) => {
       .then((res) => {
         if (res.data.status) {
           setSuccess([...successMsg, res.data.message]);
+          if (role == "Restaurant_Admin") {
+            setSuccess([
+              ...successMsg,
+              "You can create Restaurant Data after Login",
+            ]);
+          }
           setTimeout(() => {
-            if (role == "Restaurant_Admin") {
-              navigate("/registerresto/resto/" + res.data.payload.id);
-            } else {
-              navigate("/Login");
-            }
-          }, 1000);
+            navigate("/Login");
+          }, 1500);
         }
       })
       .catch((error) => {
-        setError([...errorMsg, error.response.data.message]);
+        if (error.code == "ERR_NETWORK") {
+          setError([...errorMsg, [error.message]]);
+        } else {
+          setError([...errorMsg, error.response.data.message]);
+        }
       })
       .finally(() => {
         setIsLoading(false);

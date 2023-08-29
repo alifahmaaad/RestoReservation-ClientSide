@@ -18,6 +18,7 @@ const Login = () => {
     const data = new FormData(e.currentTarget);
     setIsLoading(true);
     await axios
+      // .post("http://localhost:8080/api/user/login", {
       .post("https://restoreserve.azurewebsites.net/api/user/login", {
         username: data.get("username"),
         password: data.get("password"),
@@ -27,12 +28,20 @@ const Login = () => {
         setTimeout(() => {
           if (res.data.status) {
             dispatch(set(res.data.payload));
-            navigate("/");
+            if (res.data.payload.user.role == "Restaurant_Admin") {
+              navigate("/resto/create");
+            } else {
+              navigate("/");
+            }
           }
         }, 1000);
       })
       .catch((error) => {
-        setError([...errorMsg, error.response.data.message]);
+        if (error.code == "ERR_NETWORK") {
+          setError([...errorMsg, error.message]);
+        } else {
+          setError([...errorMsg, ...error.response.data.message]);
+        }
       })
       .finally(() => {
         setIsLoading(false);
