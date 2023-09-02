@@ -5,6 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import ErrorLabel from "../assets/components/ErrorLabel";
 import SuccessLabel from "../assets/components/SuccessLabel";
+import MapLeaflet from "../assets/components/MapLeaflet";
 
 const CreateRestaurant = () => {
   const [tags, setTags] = useState([]);
@@ -13,6 +14,7 @@ const CreateRestaurant = () => {
   const [errorMsg, setError] = useState([]);
   const [successMsg, setSuccess] = useState([]);
   const [previewIMG, setPreviewIMG] = useState();
+  const [location, setLocation] = useState();
   const navigate = useNavigate();
   const { token, dataUser } = useSelector(
     (state) => state.dataUserResponseRedux,
@@ -24,7 +26,10 @@ const CreateRestaurant = () => {
           Authorization: "Bearer " + token,
         },
       })
-      .then((res) => !res.data.status && navigate("/"))
+      .then((res) => {
+        !res.data.status && navigate("/");
+        console.log(res);
+      })
       .catch((e) => {
         if (e.code == "ERR_NETWORK") {
           setError([...errorMsg, e.message]);
@@ -49,6 +54,7 @@ const CreateRestaurant = () => {
     e.preventDefault();
     console.log(e.target.files);
     const data = new FormData(e.currentTarget);
+    setIsLoading(true);
     await axios
       .post(
         "http://localhost:8080/api/restaurant/create",
@@ -57,6 +63,8 @@ const CreateRestaurant = () => {
           owner: dataUser.id,
           tags: JSON.stringify(tags),
           photo: data.get("photo"),
+          address: data.get("address"),
+          location: location,
         },
         {
           headers: {
@@ -66,10 +74,16 @@ const CreateRestaurant = () => {
         },
       )
       .then((res) => console.log(res))
-      .catch((e) => console.log(e));
+      .catch((e) => console.log(e))
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+  const handleLocation = (location) => {
+    setLocation(location);
   };
   return (
-    <div className="relative flex min-h-[calc(100svh-55px)] items-center justify-center bg-white py-20">
+    <div className="relative flex min-h-[calc(100svh-55px)] items-center justify-center bg-white">
       <ErrorLabel errorMsg={errorMsg} func={() => navigate("/")} />
       <SuccessLabel successMsg={successMsg} />
       <div className="relative z-10 flex h-full w-full bg-white px-4 py-20 sm:max-w-[45rem] sm:rounded-lg sm:shadow-xl">
@@ -128,6 +142,15 @@ const CreateRestaurant = () => {
                 />
               ))}
             </div>
+            <label htmlFor="address">Address</label>
+            <input
+              type="text"
+              className="rounded-md border p-2 px-4"
+              placeholder="Address"
+              name="address"
+            />
+            <label htmlFor="location">Location</label>
+            <MapLeaflet func={handleLocation} />
             <label htmlFor="photo">Restaurant Photo</label>
             <input
               type="file"
@@ -140,7 +163,7 @@ const CreateRestaurant = () => {
               }
             />
             {previewIMG && (
-              <div id="previewIMG" className="font-serif">
+              <div id="previewIMG">
                 <label>Preview Image :</label>
                 <figure className="flex aspect-square h-28 w-28 min-w-[7rem] rounded-xl object-cover md:h-32 md:w-32 md:justify-center lg:h-44 lg:w-44">
                   <img
