@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import ErrorLabel from "../assets/components/ErrorLabel";
 import SuccessLabel from "../assets/components/SuccessLabel";
+import Loading from "../assets/components/Loading";
 const Register = ({ role }) => {
   const [showPass, setShowPass] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -49,7 +50,7 @@ const Register = ({ role }) => {
   };
   return (
     <div className="relative flex h-[calc(100svh-55px)] items-center justify-center bg-white ">
-      <div className="relative z-10 flex h-full w-full bg-white px-4 py-20 sm:max-h-[45rem] sm:max-w-[45rem] sm:rounded-lg sm:shadow-xl">
+      <div className="relative z-10 flex h-full w-full bg-white px-4 py-5 sm:max-h-[45rem] sm:max-w-[45rem] sm:rounded-lg sm:py-20 sm:shadow-xl">
         <SuccessLabel successMsg={successMsg} />
         <ErrorLabel errorMsg={errorMsg} func={() => setError([])} />
         <div className="absolute left-0 top-0 hidden items-center gap-2 p-5 sm:flex">
@@ -58,12 +59,7 @@ const Register = ({ role }) => {
           </p>
           <p className="font-mono font-bold">RestoReserve</p>
         </div>
-        {isLoading && (
-          <div className="absolute right-0 top-0 m-5  flex items-center gap-2">
-            <p className="text-sm font-bold">Loading</p>
-            <div className="h-5 w-5 animate-spin rounded-full border-t-2 border-black" />
-          </div>
-        )}
+        {isLoading && <Loading />}
         <div className="flex w-full flex-col items-center justify-center sm:max-w-7xl">
           <p className="py-4 font-serif text-3xl font-bold text-[#FFB100]">
             {role == "Customer" ? "Register" : "Register Admin Restaurant"}
@@ -127,7 +123,7 @@ const Register = ({ role }) => {
           {role == "Customer" ? (
             <div className="flex flex-wrap gap-1 py-4 font-serif">
               <p>Want to be a partner?</p>
-              <a className="text-[#FFB100]" href="/registerresto">
+              <a className="text-[#FFB100]" href="/register/resto">
                 Sign Up as Restaurant Admin
               </a>
             </div>

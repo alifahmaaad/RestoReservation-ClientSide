@@ -15,6 +15,7 @@ import UpdateUser from "./pages/UpdateUser";
 import UpdateRestaurant from "./pages/UpdateRestaurant";
 import UpdateMenu from "./pages/UpdateMenu";
 import UpdateReservation from "./pages/UpdateReservation";
+import MapLeaflet from "./assets/components/MapLeaflet";
 
 function App() {
   const [isTop, setIsTop] = useState(true);
@@ -25,6 +26,7 @@ function App() {
   useEffect(() => {
     window.addEventListener("scroll", checkTop);
   });
+
   return (
     <div className="relative">
       <Navbar />
@@ -46,6 +48,7 @@ function App() {
         <Route path="/reservation/update" element={<UpdateReservation />} />
         <Route path="/menu/add" element={<MenuForm />} />
         <Route path="/menu/update" element={<UpdateMenu />} />
+        <Route path="/map" element={<MapLeaflet />} />
       </Routes>
       <Footer />
       <div

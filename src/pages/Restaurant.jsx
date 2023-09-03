@@ -4,6 +4,8 @@ import OpenLabel from "../assets/components/OpenLabel";
 import TagLabel from "../assets/components/TagLabel";
 import MenuCard from "../assets/components/MenuCard";
 import ReservationLabel from "../assets/components/ReservationLabel";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 
 const Restaurant = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -39,10 +41,11 @@ const Restaurant = () => {
             DescRestaurant DescRestaurant DescRestaurant DescRestaurant
             DescRestaurant Desc
           </p>
-          <div className="flex items-center">
+          <div className="flex items-center gap-1">
             {isOpen ? <OpenLabel /> : <CloseLabel />}
+            <FontAwesomeIcon icon={faMapMarkerAlt} />
             <p
-              className="line-clamp-2 px-2 text-xs font-semibold text-gray-600 md:text-sm"
+              className="line-clamp-2 text-xs font-semibold text-gray-600 md:text-sm"
               title=""
             >
               Restaurant Address

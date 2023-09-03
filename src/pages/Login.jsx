@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import ErrorLabel from "../assets/components/ErrorLabel";
 import { set } from "../redux/slices/dataUserResponse";
 import SuccessLabel from "../assets/components/SuccessLabel";
+import Loading from "../assets/components/Loading";
 
 const Login = () => {
   const [showPass, setShowPass] = useState(false);
@@ -58,12 +59,7 @@ const Login = () => {
           </p>
           <p className="font-mono font-bold">RestoReserve</p>
         </div>
-        {isLoading && (
-          <div className="absolute right-0 top-0 m-5  flex items-center gap-2">
-            <p className="text-sm font-bold">Loading</p>
-            <div className="h-5 w-5 animate-spin rounded-full border-t-2 border-black" />
-          </div>
-        )}
+        {isLoading && <Loading />}
         <div className="flex w-full flex-col items-center justify-center ">
           <p className="font-serif text-3xl font-bold text-[#FFB100]">Login</p>
           <form
