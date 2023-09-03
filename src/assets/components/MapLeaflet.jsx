@@ -2,6 +2,8 @@ import { Circle, MapContainer, Popup, TileLayer } from "react-leaflet";
 import MarkerLeaflet from "./MarkerLeaflet";
 import "leaflet/dist/leaflet.css";
 import { useCallback, useEffect, useState } from "react";
+import { faMapPin } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const MapLeaflet = ({ func }) => {
   const [location, setLocation] = useState(null);
   const [map, setMap] = useState(null);
@@ -23,7 +25,7 @@ const MapLeaflet = ({ func }) => {
         className="absolute bottom-6 right-6 z-[100000] rounded border-2 bg-white p-2"
         type="button"
       >
-        reset
+        <FontAwesomeIcon icon={faMapPin} />
       </button>
       {location != null && (
         <MapContainer
@@ -36,9 +38,7 @@ const MapLeaflet = ({ func }) => {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <Circle center={location} radius={8}>
-            <Popup>Your Location</Popup>
-          </Circle>
+          <Circle center={location} radius={8} />
           <MarkerLeaflet positionProps={location} func={func} />
         </MapContainer>
       )}

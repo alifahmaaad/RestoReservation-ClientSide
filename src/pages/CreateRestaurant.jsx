@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import ErrorLabel from "../assets/components/ErrorLabel";
 import SuccessLabel from "../assets/components/SuccessLabel";
 import MapLeaflet from "../assets/components/MapLeaflet";
+import Loading from "../assets/components/Loading";
 
 const CreateRestaurant = () => {
   const [tags, setTags] = useState([]);
@@ -21,18 +22,32 @@ const CreateRestaurant = () => {
   );
   const checkRestaurant = async () => {
     await axios
-      .get(`http://localhost:8080/api/restaurant/${dataUser.id}`, {
-        headers: {
-          Authorization: "Bearer " + token,
+      // .get(`http://localhost:8080/api/restaurant/owner/${dataUser.id}`, {
+      .get(
+        `https://restoreserve.azurewebsites.net/api/restaurant/owner/${dataUser.id}`,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
         },
-      })
+      )
       .then((res) => {
-        !res.data.status && navigate("/");
+        if (res.data.status) {
+          setSuccess([
+            ...successMsg,
+            ["You already have Restaurant, Navigate to home"],
+          ]);
+          setTimeout(() => {
+            navigate("/");
+          }, 1500);
+        }
         console.log(res);
       })
       .catch((e) => {
         if (e.code == "ERR_NETWORK") {
           setError([...errorMsg, e.message]);
+        } else {
+          setError([...errorMsg, ...e.response.data.message]);
         }
       });
   };
@@ -40,7 +55,7 @@ const CreateRestaurant = () => {
     if (dataUser != "" && token != "") {
       dataUser.role != "Restaurant_Admin" ? navigate("/") : checkRestaurant();
     } else {
-      navigate("/");
+      navigate("/login");
     }
   }, []);
   const handleDeleteTag = (key) => {
@@ -64,7 +79,7 @@ const CreateRestaurant = () => {
           tags: JSON.stringify(tags),
           photo: data.get("photo"),
           address: data.get("address"),
-          location: location,
+          location: JSON.stringify(location),
         },
         {
           headers: {
@@ -73,8 +88,21 @@ const CreateRestaurant = () => {
           },
         },
       )
-      .then((res) => console.log(res))
-      .catch((e) => console.log(e))
+      .then((res) => {
+        setSuccess([...successMsg, res.data.message]);
+        setTimeout(() => {
+          if (res.data.status) {
+            navigate("/restaurant/" + res.data.payload.id);
+          }
+        }, 1000);
+      })
+      .catch((e) => {
+        if (e.code == "ERR_NETWORK") {
+          setError([...errorMsg, e.message]);
+        } else {
+          setError([...errorMsg, ...error.response.data.message]);
+        }
+      })
       .finally(() => {
         setIsLoading(false);
       });
@@ -93,6 +121,7 @@ const CreateRestaurant = () => {
           </p>
           <p className="font-mono font-bold">RestoReserve</p>
         </div>
+        {isLoading && <Loading />}
         <div className="flex w-full flex-col items-center justify-center sm:max-w-7xl">
           <p className="py-4 font-serif text-3xl font-bold text-[#FFB100]">
             Restaurant Register
