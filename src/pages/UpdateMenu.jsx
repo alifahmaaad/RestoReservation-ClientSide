@@ -1,4 +1,91 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import SuccessLabel from "../assets/components/SuccessLabel";
+import ErrorLabel from "../assets/components/ErrorLabel";
+import Loading from "../assets/components/Loading";
+import { useSelector } from "react-redux";
 const UpdateMenu = () => {
+  const { token, dataUser } = useSelector(
+    (state) => state.dataUserResponseRedux,
+  );
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMsg, setError] = useState([]);
+  const [successMsg, setSuccess] = useState([]);
+  const [previewIMG, setPreviewIMG] = useState();
+  const [idResto, setIdResto] = useState(null);
+  const [restoName, setRestoName] = useState(null);
+  const navigate = useNavigate();
+  const getRestaurant = async () => {
+    await axios
+      .get(`http://localhost:8080/api/restaurant/owner/${dataUser.id}`, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+      .then((res) => {
+        !res.data.status && navigate("/");
+        console.log(res.data);
+        setIdResto(res.data.payload.id);
+        setRestoName(res.data.payload.name);
+      })
+      .catch((e) => {
+        if (e.code == "ERR_NETWORK") {
+          setError([...errorMsg, e.message]);
+        } else {
+          setError([...errorMsg, ...e.response.data.message]);
+        }
+      });
+  };
+  useEffect(() => {
+    if (dataUser != "" && token != "") {
+      dataUser.role == "Customer" && navigate("/");
+      dataUser.role == "Restaurant_Admin" && getRestaurant();
+    } else {
+      navigate("/login");
+    }
+  }, []);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const dataform = new FormData(e.currentTarget);
+    const data = {
+      restaurant: idResto != null && idResto,
+      name: dataform.get("name"),
+      price: dataform.get("price"),
+      description: dataform.get("description"),
+      photo: dataform.get("photo"),
+    };
+    setIsLoading(true);
+    await axios
+      .post(
+        "http://localhost:8080/api/restaurant/api/menu/restaurant/create",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+        },
+      )
+      .then((res) => {
+        setSuccess([...successMsg, res.data.message]);
+        setTimeout(() => {
+          if (res.data.status) {
+            navigate("/restaurant/" + idResto);
+          }
+        }, 1000);
+      })
+      .catch((e) => {
+        if (e.code == "ERR_NETWORK") {
+          setError([...errorMsg, e.message]);
+        } else {
+          setError([...errorMsg, ...error.response.data.message]);
+        }
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
   return (
     <div className="relative flex min-h-[calc(100svh-55px)] items-center justify-center bg-white ">
       <div className="relative z-10 flex h-full w-full bg-white py-5 sm:max-h-[45rem] sm:max-w-[45rem] sm:rounded-lg sm:shadow-xl md:py-20">
