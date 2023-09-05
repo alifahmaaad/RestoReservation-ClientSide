@@ -12,6 +12,7 @@ const MapLeaflet = ({ func }) => {
       navigator.geolocation.getCurrentPosition((position) => {
         const { latitude, longitude } = position.coords;
         setLocation({ lat: latitude, lng: longitude });
+        func({ lat: latitude, lng: longitude });
       });
     }
   }, []);
