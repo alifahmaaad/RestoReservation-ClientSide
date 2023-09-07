@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import MapLeaflet from "../assets/components/MapLeaflet";
 import ErrorLabel from "../assets/components/ErrorLabel";
 import SuccessLabel from "../assets/components/SuccessLabel";
+import Loading from "../assets/components/Loading";
 
 const UpdateRestaurant = () => {
   const [tagText, setTagText] = useState("");
@@ -87,8 +88,8 @@ const UpdateRestaurant = () => {
     setIsLoading(true);
     console.log(filledData);
     await axios
-      // .post("http://localhost:8080/api/restaurant/update", filledData, {
-      .post(
+      // .put("http://localhost:8080/api/restaurant/update", filledData, {
+      .put(
         "https://restoreserve.azurewebsites.net/api/restaurant/update",
         filledData,
         {
