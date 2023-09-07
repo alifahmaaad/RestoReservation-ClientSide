@@ -4,20 +4,32 @@ import "leaflet/dist/leaflet.css";
 import { useCallback, useEffect, useState } from "react";
 import { faMapPin } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-const MapLeaflet = ({ func }) => {
-  const [location, setLocation] = useState(null);
+const MapLeaflet = ({ func, islocated }) => {
+  const [markerloc, setMarkerloc] = useState(null);
+  const [urlocation, setUrLocation] = useState(null);
   const [map, setMap] = useState(null);
   useEffect(() => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
         const { latitude, longitude } = position.coords;
-        setLocation({ lat: latitude, lng: longitude });
+        setUrLocation({ lat: latitude, lng: longitude });
+        if (islocated != undefined) {
+          setMarkerloc(islocated);
+        } else {
+          setMarkerloc({ lat: latitude, lng: longitude });
+        }
         func({ lat: latitude, lng: longitude });
       });
     }
   }, []);
   const onClick = useCallback(() => {
-    map.setView(location, 17);
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const { latitude, longitude } = position.coords;
+        setUrLocation({ lat: latitude, lng: longitude });
+        map.setView({ lat: latitude, lng: longitude }, 17);
+      });
+    }
   }, [map]);
   return (
     <div className="relative w-full">
@@ -28,9 +40,9 @@ const MapLeaflet = ({ func }) => {
       >
         <FontAwesomeIcon icon={faMapPin} />
       </button>
-      {location != null && (
+      {markerloc != null && (
         <MapContainer
-          center={location}
+          center={markerloc}
           zoom={17}
           className="h-[10rem] w-full"
           ref={setMap}
@@ -39,8 +51,8 @@ const MapLeaflet = ({ func }) => {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <Circle center={location} radius={8} />
-          <MarkerLeaflet positionProps={location} func={func} />
+          <Circle center={urlocation} radius={8} />
+          <MarkerLeaflet positionProps={markerloc} func={func} />
         </MapContainer>
       )}
     </div>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Marker, Popup, useMapEvents } from "react-leaflet";
+import { Marker, Circle, useMapEvents } from "react-leaflet";
 
 function MarkerLeaflet({ positionProps, func }) {
   const [position, setPosition] = useState(positionProps);
@@ -14,7 +14,10 @@ function MarkerLeaflet({ positionProps, func }) {
   });
 
   return position === null ? null : (
-    <Marker position={position} draggable={true} />
+    <div>
+      <Circle center={position} radius={3} color="red" />
+      <Marker position={position} draggable={true} />
+    </div>
   );
 }
 export default MarkerLeaflet;
