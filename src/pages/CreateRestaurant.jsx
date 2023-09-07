@@ -46,8 +46,6 @@ const CreateRestaurant = () => {
       .catch((e) => {
         if (e.code == "ERR_NETWORK") {
           setError([...errorMsg, e.message]);
-        } else {
-          setError([...errorMsg, ...e.response.data.message]);
         }
       });
   };
@@ -59,7 +57,6 @@ const CreateRestaurant = () => {
     }
   }, []);
   const handleDeleteTag = (key) => {
-    console.log(token);
     const arr = [...tags];
     arr.splice(key, 1);
     setTags(arr);
@@ -67,12 +64,14 @@ const CreateRestaurant = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(e.target.files);
+    window.scrollTo(0, 0);
     const data = new FormData(e.currentTarget);
     setIsLoading(true);
     await axios
+      // .post(
+      //   "http://localhost:8080/api/restaurant/create",
       .post(
-        "http://localhost:8080/api/restaurant/create",
+        `https://restoreserve.azurewebsites.net/api/restaurant/create`,
         {
           name: data.get("name"),
           owner: dataUser.id,
@@ -83,7 +82,7 @@ const CreateRestaurant = () => {
         },
         {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
             Authorization: "Bearer " + token,
           },
         },
@@ -97,10 +96,11 @@ const CreateRestaurant = () => {
         }, 1000);
       })
       .catch((e) => {
+        console.log(e);
         if (e.code == "ERR_NETWORK") {
           setError([...errorMsg, e.message]);
         } else {
-          setError([...errorMsg, ...error.response.data.message]);
+          setError([...errorMsg, ...e.response.data.message]);
         }
       })
       .finally(() => {
@@ -112,7 +112,7 @@ const CreateRestaurant = () => {
   };
   return (
     <div className="relative flex min-h-[calc(100svh-55px)] items-center justify-center bg-white">
-      <ErrorLabel errorMsg={errorMsg} func={() => navigate("/")} />
+      <ErrorLabel errorMsg={errorMsg} func={() => setError([])} />
       <SuccessLabel successMsg={successMsg} />
       <div className="relative z-10 flex h-full w-full bg-white px-4 py-20 sm:max-w-[45rem] sm:rounded-lg sm:shadow-xl">
         <div className="absolute left-0 top-0 hidden items-center gap-2 p-5 sm:flex">
