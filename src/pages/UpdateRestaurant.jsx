@@ -38,10 +38,8 @@ const UpdateRestaurant = () => {
   }, []);
   const getDataResto = async () => {
     await axios
-      // .get("http://localhost:8080/api/restaurant/owner/" + dataUser.id, {
       .get(
-        "https://restoreserve.azurewebsites.net/api/restaurant/owner/" +
-          dataUser.id,
+        `${import.meta.env.VITE_HOST_URL}/api/restaurant/owner/` + dataUser.id,
         {
           headers: {
             Authorization: "Bearer " + token,
@@ -62,10 +60,7 @@ const UpdateRestaurant = () => {
         });
       })
       .catch((e) => {
-        if (
-          typeof e.response.data != "object" &&
-          e.response.data.includes("Authentication failed: JWT expired")
-        ) {
+        if (typeof e.response.data != "object" && e.response.status == 403) {
           navigate("/login");
         } else if (e.code == "ERR_NETWORK") {
           setError([...errorMsg, e.message]);
@@ -97,9 +92,8 @@ const UpdateRestaurant = () => {
     setIsLoading(true);
     console.log(filledData);
     await axios
-      // .put("http://localhost:8080/api/restaurant/update", filledData, {
       .put(
-        "https://restoreserve.azurewebsites.net/api/restaurant/update",
+        `${import.meta.env.VITE_HOST_URL}/api/restaurant/update`,
         filledData,
         {
           headers: {
@@ -117,10 +111,7 @@ const UpdateRestaurant = () => {
         }, 1000);
       })
       .catch((e) => {
-        if (
-          typeof e.response.data != "object" &&
-          e.response.data.includes("Authentication failed: JWT expired")
-        ) {
+        if (typeof e.response.data != "object" && e.response.status == 403) {
           navigate("/login");
         } else if (e.code == "ERR_NETWORK") {
           setError([...errorMsg, e.message]);
@@ -243,7 +234,7 @@ const UpdateRestaurant = () => {
                     src={
                       previewIMG
                         ? previewIMG
-                        : "http://localhost:8080/" + restoData.photo
+                        : import.meta.env.VITE_HOST_URL + "/" + restoData.photo
                     }
                     className="h-full w-full rounded-xl object-cover"
                     loading="lazy"

@@ -26,8 +26,7 @@ const UpdateMenu = () => {
   const navigate = useNavigate();
   const getMenu = async () => {
     await axios
-      // .get(`http://localhost:8080/api/menu/${param.id}`, {
-      .get(`https://restoreserve.azurewebsites.net/api/menu/${param.id}`, {
+      .get(`${import.meta.env.VITE_HOST_URL}/api/menu/${param.id}`, {
         headers: {
           Authorization: "Bearer " + token,
         },
@@ -46,10 +45,7 @@ const UpdateMenu = () => {
         });
       })
       .catch((e) => {
-        if (
-          typeof e.response.data != "object" &&
-          e.response.data.includes("Authentication failed: JWT expired")
-        ) {
+        if (typeof e.response.data != "object" && e.response.status == 403) {
           navigate("/login");
         } else if (e.code == "ERR_NETWORK") {
           setError([...errorMsg, e.message]);
@@ -83,8 +79,7 @@ const UpdateMenu = () => {
     setIsLoading(true);
     await axios
       .put(
-        // "http://localhost:8080/api/menu/restaurant/update",
-        "https://restoreserve.azurewebsites.net/api/menu/restaurant/update",
+        `${import.meta.env.VITE_HOST_URL}/api/menu/restaurant/update`,
         data,
         {
           headers: {
@@ -103,10 +98,7 @@ const UpdateMenu = () => {
       })
       .catch((e) => {
         console.log(e);
-        if (
-          typeof e.response.data != "object" &&
-          e.response.data.includes("Authentication failed: JWT expired")
-        ) {
+        if (typeof e.response.data != "object" && e.response.status == 403) {
           navigate("/login");
         } else if (e.code == "ERR_NETWORK") {
           setError([...errorMsg, e.message]);
@@ -186,7 +178,7 @@ const UpdateMenu = () => {
                     src={
                       previewIMG
                         ? previewIMG
-                        : "http://localhost:8080/" + menuData.photo
+                        : import.meta.env.VITE_HOST_URL + "/" + menuData.photo
                     }
                     className="h-full w-full rounded-xl object-cover"
                     loading="lazy"

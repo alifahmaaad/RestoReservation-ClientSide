@@ -1,4 +1,18 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 const ReservationForm = () => {
+  const { token, dataUser } = useSelector(
+    (state) => state.dataUserResponseRedux,
+  );
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (dataUser != "" && token != "") {
+      dataUser.role == "Restaurant_Admin" && navigate("/");
+    } else {
+      navigate("/login");
+    }
+  }, []);
   return (
     <div className="relative flex min-h-[calc(100svh-55px)] items-center justify-center bg-white ">
       <div className="relative z-10 flex h-full w-full bg-white py-5 sm:max-h-[45rem] sm:max-w-[45rem] sm:rounded-lg sm:shadow-xl md:py-20">

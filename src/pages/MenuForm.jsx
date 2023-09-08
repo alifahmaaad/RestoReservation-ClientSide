@@ -19,9 +19,8 @@ const MenuForm = () => {
   const navigate = useNavigate();
   const getRestaurant = async () => {
     await axios
-      // .get(`http://localhost:8080/api/restaurant/owner/${dataUser.id}`, {
       .get(
-        `https://restoreserve.azurewebsites.net/api/restaurant/owner/${dataUser.id}`,
+        `${import.meta.env.VITE_HOST_URL}/api/restaurant/owner/${dataUser.id}`,
         {
           headers: {
             Authorization: "Bearer " + token,
@@ -34,10 +33,7 @@ const MenuForm = () => {
         setRestoName(res.data.payload.name);
       })
       .catch((e) => {
-        if (
-          typeof e.response.data != "object" &&
-          e.response.data.includes("Authentication failed: JWT expired")
-        ) {
+        if (typeof e.response.data != "object" && e.response.status == 403) {
           navigate("/login");
         } else if (e.code == "ERR_NETWORK") {
           setError([...errorMsg, e.message]);
@@ -68,8 +64,7 @@ const MenuForm = () => {
     setIsLoading(true);
     await axios
       .post(
-        // "http://localhost:8080/api/menu/restaurant/create",
-        "https://restoreserve.azurewebsites.net/api/menu/restaurant/create",
+        `${import.meta.env.VITE_HOST_URL}/api/menu/restaurant/create`,
         data,
         {
           headers: {
@@ -87,10 +82,7 @@ const MenuForm = () => {
         }, 1000);
       })
       .catch((e) => {
-        if (
-          typeof e.response.data != "object" &&
-          e.response.data.includes("Authentication failed: JWT expired")
-        ) {
+        if (typeof e.response.data != "object" && e.response.status == 403) {
           navigate("/login");
         } else if (e.code == "ERR_NETWORK") {
           setError([...errorMsg, e.message]);
