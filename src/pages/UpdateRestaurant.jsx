@@ -58,7 +58,9 @@ const UpdateRestaurant = () => {
       })
       .catch((e) => {
         console.log(e);
-        if (e.code == "ERR_NETWORK") {
+        if (e.response.data.includes("Authentication failed: JWT expired")) {
+          navigate("/login");
+        } else if (e.code == "ERR_NETWORK") {
           setError([...errorMsg, e.message]);
         } else {
           setError([...errorMsg, ...e.response.data.message]);
@@ -108,8 +110,9 @@ const UpdateRestaurant = () => {
         }, 1000);
       })
       .catch((e) => {
-        console.log(e);
-        if (e.code == "ERR_NETWORK") {
+        if (e.response.data.includes("Authentication failed: JWT expired")) {
+          navigate("/login");
+        } else if (e.code == "ERR_NETWORK") {
           setError([...errorMsg, e.message]);
         } else {
           setError([...errorMsg, ...e.response.data.message]);

@@ -44,7 +44,12 @@ const CreateRestaurant = () => {
         console.log(res);
       })
       .catch((e) => {
-        if (e.code == "ERR_NETWORK") {
+        if (
+          typeof e.response.data != "object" &&
+          e.response.data.includes("Authentication failed: JWT expired")
+        ) {
+          navigate("/login");
+        } else if (e.code == "ERR_NETWORK") {
           setError([...errorMsg, e.message]);
         }
       });
@@ -68,9 +73,9 @@ const CreateRestaurant = () => {
     const data = new FormData(e.currentTarget);
     setIsLoading(true);
     await axios
-      // .post(
-      //   "http://localhost:8080/api/restaurant/create",
       .post(
+        // "http://localhost:8080/api/restaurant/create",
+        // .post(
         `https://restoreserve.azurewebsites.net/api/restaurant/create`,
         {
           name: data.get("name"),
@@ -93,11 +98,12 @@ const CreateRestaurant = () => {
           if (res.data.status) {
             navigate("/restaurant/" + res.data.payload.id);
           }
-        }, 1000);
+        }, 1500);
       })
       .catch((e) => {
-        console.log(e);
-        if (e.code == "ERR_NETWORK") {
+        if (e.response.data.includes("Authentication failed: JWT expired")) {
+          navigate("/login");
+        } else if (e.code == "ERR_NETWORK") {
           setError([...errorMsg, e.message]);
         } else {
           setError([...errorMsg, ...e.response.data.message]);
