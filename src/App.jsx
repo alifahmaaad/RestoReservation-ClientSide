@@ -47,7 +47,7 @@ function App() {
         <Route path="/reservation/add" element={<ReservationForm />} />
         <Route path="/reservation/update" element={<UpdateReservation />} />
         <Route path="/menu/add" element={<MenuForm />} />
-        <Route path="/menu/update" element={<UpdateMenu />} />
+        <Route path="/menu/update/:id" element={<UpdateMenu />} />
         <Route path="/map" element={<MapLeaflet />} />
       </Routes>
       <Footer />

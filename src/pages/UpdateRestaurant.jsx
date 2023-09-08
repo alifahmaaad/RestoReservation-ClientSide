@@ -29,7 +29,12 @@ const UpdateRestaurant = () => {
     (state) => state.dataUserResponseRedux,
   );
   useEffect(() => {
-    if (token != "") getDataResto();
+    if (dataUser != "" && token != "") {
+      dataUser.role == "Customer" && navigate("/");
+      dataUser.role == "Restaurant_Admin" && getDataResto();
+    } else {
+      navigate("/login");
+    }
   }, []);
   const getDataResto = async () => {
     await axios
@@ -57,8 +62,10 @@ const UpdateRestaurant = () => {
         });
       })
       .catch((e) => {
-        console.log(e);
-        if (e.response.data.includes("Authentication failed: JWT expired")) {
+        if (
+          typeof e.response.data != "object" &&
+          e.response.data.includes("Authentication failed: JWT expired")
+        ) {
           navigate("/login");
         } else if (e.code == "ERR_NETWORK") {
           setError([...errorMsg, e.message]);
@@ -110,7 +117,10 @@ const UpdateRestaurant = () => {
         }, 1000);
       })
       .catch((e) => {
-        if (e.response.data.includes("Authentication failed: JWT expired")) {
+        if (
+          typeof e.response.data != "object" &&
+          e.response.data.includes("Authentication failed: JWT expired")
+        ) {
           navigate("/login");
         } else if (e.code == "ERR_NETWORK") {
           setError([...errorMsg, e.message]);

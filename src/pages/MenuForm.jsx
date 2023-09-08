@@ -34,7 +34,10 @@ const MenuForm = () => {
         setRestoName(res.data.payload.name);
       })
       .catch((e) => {
-        if (e.response.data.includes("Authentication failed: JWT expired")) {
+        if (
+          typeof e.response.data != "object" &&
+          e.response.data.includes("Authentication failed: JWT expired")
+        ) {
           navigate("/login");
         } else if (e.code == "ERR_NETWORK") {
           setError([...errorMsg, e.message]);
@@ -84,8 +87,10 @@ const MenuForm = () => {
         }, 1000);
       })
       .catch((e) => {
-        console.log(e);
-        if (e.response.data.includes("Authentication failed: JWT expired")) {
+        if (
+          typeof e.response.data != "object" &&
+          e.response.data.includes("Authentication failed: JWT expired")
+        ) {
           navigate("/login");
         } else if (e.code == "ERR_NETWORK") {
           setError([...errorMsg, e.message]);

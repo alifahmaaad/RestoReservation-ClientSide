@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import SuccessLabel from "../assets/components/SuccessLabel";
 import ErrorLabel from "../assets/components/ErrorLabel";
 import Loading from "../assets/components/Loading";
@@ -13,24 +13,45 @@ const UpdateMenu = () => {
   const [errorMsg, setError] = useState([]);
   const [successMsg, setSuccess] = useState([]);
   const [previewIMG, setPreviewIMG] = useState();
-  const [idResto, setIdResto] = useState(null);
-  const [restoName, setRestoName] = useState(null);
+  const param = useParams();
+  const [menuData, setDataMenu] = useState({
+    id: null,
+    name: null,
+    restoName: null,
+    restoId: null,
+    price: null,
+    description: null,
+    photo: null,
+  });
   const navigate = useNavigate();
-  const getRestaurant = async () => {
+  const getMenu = async () => {
     await axios
-      .get(`http://localhost:8080/api/restaurant/owner/${dataUser.id}`, {
+      // .get(`http://localhost:8080/api/menu/${param.id}`, {
+      .get(`https://restoreserve.azurewebsites.net/api/menu/${param.id}`, {
         headers: {
           Authorization: "Bearer " + token,
         },
       })
       .then((res) => {
         !res.data.status && navigate("/");
-        console.log(res.data);
-        setIdResto(res.data.payload.id);
-        setRestoName(res.data.payload.name);
+        setDataMenu({
+          ...menuData,
+          id: res.data.payload.id,
+          name: res.data.payload.name,
+          restoName: res.data.payload.restaurant.name,
+          restoId: res.data.payload.restaurant.id,
+          price: res.data.payload.price,
+          photo: res.data.payload.photo,
+          description: res.data.payload.description,
+        });
       })
       .catch((e) => {
-        if (e.code == "ERR_NETWORK") {
+        if (
+          typeof e.response.data != "object" &&
+          e.response.data.includes("Authentication failed: JWT expired")
+        ) {
+          navigate("/login");
+        } else if (e.code == "ERR_NETWORK") {
           setError([...errorMsg, e.message]);
         } else {
           setError([...errorMsg, ...e.response.data.message]);
@@ -40,29 +61,34 @@ const UpdateMenu = () => {
   useEffect(() => {
     if (dataUser != "" && token != "") {
       dataUser.role == "Customer" && navigate("/");
-      dataUser.role == "Restaurant_Admin" && getRestaurant();
+      dataUser.role == "Restaurant_Admin" && getMenu();
     } else {
       navigate("/login");
     }
   }, []);
   const handleSubmit = async (e) => {
     e.preventDefault();
+    window.scrollTo(0, 0);
     const dataform = new FormData(e.currentTarget);
     const data = {
-      restaurant: idResto != null && idResto,
+      id: menuData.id,
+      restaurant: menuData.restoId,
       name: dataform.get("name"),
       price: dataform.get("price"),
       description: dataform.get("description"),
-      photo: dataform.get("photo"),
     };
+    if (dataform.get("photo").size != 0) {
+      data = { ...data, photo: data.get("photo") };
+    }
     setIsLoading(true);
     await axios
-      .post(
-        "http://localhost:8080/api/restaurant/api/menu/restaurant/create",
+      .put(
+        // "http://localhost:8080/api/menu/restaurant/update",
+        "https://restoreserve.azurewebsites.net/api/menu/restaurant/update",
         data,
         {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
             Authorization: "Bearer " + token,
           },
         },
@@ -76,10 +102,16 @@ const UpdateMenu = () => {
         }, 1000);
       })
       .catch((e) => {
-        if (e.code == "ERR_NETWORK") {
+        console.log(e);
+        if (
+          typeof e.response.data != "object" &&
+          e.response.data.includes("Authentication failed: JWT expired")
+        ) {
+          navigate("/login");
+        } else if (e.code == "ERR_NETWORK") {
           setError([...errorMsg, e.message]);
         } else {
-          setError([...errorMsg, ...error.response.data.message]);
+          setError([...errorMsg, ...e.response.data.message]);
         }
       })
       .finally(() => {
@@ -89,22 +121,22 @@ const UpdateMenu = () => {
   return (
     <div className="relative flex min-h-[calc(100svh-55px)] items-center justify-center bg-white ">
       <div className="relative z-10 flex h-full w-full bg-white py-5 sm:max-h-[45rem] sm:max-w-[45rem] sm:rounded-lg sm:shadow-xl md:py-20">
+        <SuccessLabel successMsg={successMsg} />
+        <ErrorLabel errorMsg={errorMsg} func={() => setError([])} />
         <div className="absolute left-0 top-0 hidden items-center gap-2 p-5 sm:flex">
           <p className="text-3xl font-bold">
             RR<b className="text-[#FFB100]">.</b>
           </p>
           <p className="font-mono font-bold">RestoReserve</p>
         </div>
+        {isLoading && <Loading />}
         <div className="flex w-full flex-col items-center justify-center sm:max-w-7xl">
           <p className="py-4 font-serif text-3xl font-bold text-[#FFB100]">
             Update Menu
           </p>
           <form
             className="flex h-full w-full flex-col justify-center gap-3 px-10"
-            onSubmit={(e) => {
-              e.preventDefault();
-              console.log(e.target);
-            }}
+            onSubmit={handleSubmit}
           >
             <label htmlFor="restaurantname">Restaurant Name</label>
             <input
@@ -135,6 +167,34 @@ const UpdateMenu = () => {
               placeholder="Description"
               name="description"
             />
+            <label htmlFor="photo">Menu Photo</label>
+            <input
+              type="file"
+              className="h-full rounded-md border p-2 px-4"
+              placeholder="photo"
+              name="photo"
+              accept="image/*"
+              onChange={(e) =>
+                setPreviewIMG(URL.createObjectURL(e.target.files[0]))
+              }
+            />
+            {(previewIMG || menuData.photo) && (
+              <div id="previewIMG">
+                <label>Preview Image :</label>
+                <figure className="flex aspect-square h-28 w-28 min-w-[7rem] rounded-xl object-cover md:h-32 md:w-32 md:justify-center lg:h-44 lg:w-44">
+                  <img
+                    src={
+                      previewIMG
+                        ? previewIMG
+                        : "http://localhost:8080/" + menuData.photo
+                    }
+                    className="h-full w-full rounded-xl object-cover"
+                    loading="lazy"
+                    alt=""
+                  />
+                </figure>
+              </div>
+            )}
             <button
               className="rounded-full bg-[#FFB100] py-3 text-white"
               type="submit"
