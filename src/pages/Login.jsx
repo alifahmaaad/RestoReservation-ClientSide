@@ -19,8 +19,7 @@ const Login = () => {
     const data = new FormData(e.currentTarget);
     setIsLoading(true);
     await axios
-      // .post("http://localhost:8080/api/user/login", {
-      .post("https://restoreserve.azurewebsites.net/api/user/login", {
+      .post(`${import.meta.env.VITE_HOST_URL}/api/user/login`, {
         username: data.get("username"),
         password: data.get("password"),
       })

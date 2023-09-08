@@ -29,14 +29,17 @@ const UpdateRestaurant = () => {
     (state) => state.dataUserResponseRedux,
   );
   useEffect(() => {
-    if (token != "") getDataResto();
+    if (dataUser != "" && token != "") {
+      dataUser.role == "Customer" && navigate("/");
+      dataUser.role == "Restaurant_Admin" && getDataResto();
+    } else {
+      navigate("/login");
+    }
   }, []);
   const getDataResto = async () => {
     await axios
-      // .get("http://localhost:8080/api/restaurant/owner/" + dataUser.id, {
       .get(
-        "https://restoreserve.azurewebsites.net/api/restaurant/owner/" +
-          dataUser.id,
+        `${import.meta.env.VITE_HOST_URL}/api/restaurant/owner/` + dataUser.id,
         {
           headers: {
             Authorization: "Bearer " + token,
@@ -57,8 +60,9 @@ const UpdateRestaurant = () => {
         });
       })
       .catch((e) => {
-        console.log(e);
-        if (e.code == "ERR_NETWORK") {
+        if (typeof e.response.data != "object" && e.response.status == 403) {
+          navigate("/login");
+        } else if (e.code == "ERR_NETWORK") {
           setError([...errorMsg, e.message]);
         } else {
           setError([...errorMsg, ...e.response.data.message]);
@@ -88,9 +92,8 @@ const UpdateRestaurant = () => {
     setIsLoading(true);
     console.log(filledData);
     await axios
-      // .put("http://localhost:8080/api/restaurant/update", filledData, {
       .put(
-        "https://restoreserve.azurewebsites.net/api/restaurant/update",
+        `${import.meta.env.VITE_HOST_URL}/api/restaurant/update`,
         filledData,
         {
           headers: {
@@ -108,8 +111,9 @@ const UpdateRestaurant = () => {
         }, 1000);
       })
       .catch((e) => {
-        console.log(e);
-        if (e.code == "ERR_NETWORK") {
+        if (typeof e.response.data != "object" && e.response.status == 403) {
+          navigate("/login");
+        } else if (e.code == "ERR_NETWORK") {
           setError([...errorMsg, e.message]);
         } else {
           setError([...errorMsg, ...e.response.data.message]);
@@ -230,7 +234,7 @@ const UpdateRestaurant = () => {
                     src={
                       previewIMG
                         ? previewIMG
-                        : "http://localhost:8080/" + restoData.photo
+                        : import.meta.env.VITE_HOST_URL + "/" + restoData.photo
                     }
                     className="h-full w-full rounded-xl object-cover"
                     loading="lazy"

@@ -22,9 +22,8 @@ const CreateRestaurant = () => {
   );
   const checkRestaurant = async () => {
     await axios
-      // .get(`http://localhost:8080/api/restaurant/owner/${dataUser.id}`, {
       .get(
-        `https://restoreserve.azurewebsites.net/api/restaurant/owner/${dataUser.id}`,
+        `${import.meta.env.VITE_HOST_URL}/api/restaurant/owner/${dataUser.id}`,
         {
           headers: {
             Authorization: "Bearer " + token,
@@ -44,7 +43,9 @@ const CreateRestaurant = () => {
         console.log(res);
       })
       .catch((e) => {
-        if (e.code == "ERR_NETWORK") {
+        if (typeof e.response.data != "object" && e.response.status == 403) {
+          navigate("/login");
+        } else if (e.code == "ERR_NETWORK") {
           setError([...errorMsg, e.message]);
         }
       });
@@ -68,10 +69,8 @@ const CreateRestaurant = () => {
     const data = new FormData(e.currentTarget);
     setIsLoading(true);
     await axios
-      // .post(
-      //   "http://localhost:8080/api/restaurant/create",
       .post(
-        `https://restoreserve.azurewebsites.net/api/restaurant/create`,
+        `${import.meta.env.VITE_HOST_URL}/api/restaurant/create`,
         {
           name: data.get("name"),
           owner: dataUser.id,
@@ -93,11 +92,12 @@ const CreateRestaurant = () => {
           if (res.data.status) {
             navigate("/restaurant/" + res.data.payload.id);
           }
-        }, 1000);
+        }, 1500);
       })
       .catch((e) => {
-        console.log(e);
-        if (e.code == "ERR_NETWORK") {
+        if (typeof e.response.data != "object" && e.response.status == 403) {
+          navigate("/login");
+        } else if (e.code == "ERR_NETWORK") {
           setError([...errorMsg, e.message]);
         } else {
           setError([...errorMsg, ...e.response.data.message]);

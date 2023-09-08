@@ -15,8 +15,7 @@ const Register = ({ role }) => {
     const data = new FormData(e.currentTarget);
     setIsLoading(true);
     await axios
-      .post("http://restoreserve.azurewebsites.net/api/user/register", {
-        // .post("http://localhost:8080/api/user/register", {
+      .post(`${import.meta.env.VITE_HOST_URL}/api/user/register`, {
         fullName: data.get("fullName"),
         username: data.get("username"),
         email: data.get("email"),
