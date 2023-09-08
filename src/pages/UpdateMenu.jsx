@@ -66,7 +66,7 @@ const UpdateMenu = () => {
     e.preventDefault();
     window.scrollTo(0, 0);
     const dataform = new FormData(e.currentTarget);
-    const data = {
+    let data = {
       id: menuData.id,
       restaurant: menuData.restoId,
       name: dataform.get("name"),

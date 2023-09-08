@@ -44,7 +44,7 @@ function App() {
         <Route path="/resto/create" element={<CreateRestaurant />} />
         <Route path="/resto/update" element={<UpdateRestaurant />} />
         <Route path="/reservation" element={<Reservations />} />
-        <Route path="/reservation/add" element={<ReservationForm />} />
+        <Route path="/reservation/add/:idResto" element={<ReservationForm />} />
         <Route path="/reservation/update" element={<UpdateReservation />} />
         <Route path="/menu/add" element={<MenuForm />} />
         <Route path="/menu/update/:id" element={<UpdateMenu />} />
