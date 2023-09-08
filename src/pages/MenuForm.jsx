@@ -19,19 +19,24 @@ const MenuForm = () => {
   const navigate = useNavigate();
   const getRestaurant = async () => {
     await axios
-      .get(`http://localhost:8080/api/restaurant/owner/${dataUser.id}`, {
-        headers: {
-          Authorization: "Bearer " + token,
+      // .get(`http://localhost:8080/api/restaurant/owner/${dataUser.id}`, {
+      .get(
+        `https://restoreserve.azurewebsites.net/api/restaurant/owner/${dataUser.id}`,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
         },
-      })
+      )
       .then((res) => {
         !res.data.status && navigate("/");
-        console.log(res.data);
         setIdResto(res.data.payload.id);
         setRestoName(res.data.payload.name);
       })
       .catch((e) => {
-        if (e.code == "ERR_NETWORK") {
+        if (e.response.data.includes("Authentication failed: JWT expired")) {
+          navigate("/login");
+        } else if (e.code == "ERR_NETWORK") {
           setError([...errorMsg, e.message]);
         } else {
           setError([...errorMsg, ...e.response.data.message]);
@@ -48,6 +53,7 @@ const MenuForm = () => {
   }, []);
   const handleSubmit = async (e) => {
     e.preventDefault();
+    window.scrollTo(0, 0);
     const dataform = new FormData(e.currentTarget);
     const data = {
       restaurant: idResto != null && idResto,
@@ -59,12 +65,12 @@ const MenuForm = () => {
     setIsLoading(true);
     await axios
       .post(
-        // "http://localhost:8080/api/restaurant/api/menu/restaurant/create",
-        "https://restoreserve.azurewebsites.net/api/restaurant/api/menu/restaurant/create",
+        // "http://localhost:8080/api/menu/restaurant/create",
+        "https://restoreserve.azurewebsites.net/api/menu/restaurant/create",
         data,
         {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
             Authorization: "Bearer " + token,
           },
         },
@@ -78,10 +84,13 @@ const MenuForm = () => {
         }, 1000);
       })
       .catch((e) => {
-        if (e.code == "ERR_NETWORK") {
+        console.log(e);
+        if (e.response.data.includes("Authentication failed: JWT expired")) {
+          navigate("/login");
+        } else if (e.code == "ERR_NETWORK") {
           setError([...errorMsg, e.message]);
         } else {
-          setError([...errorMsg, ...error.response.data.message]);
+          setError([...errorMsg, ...e.response.data.message]);
         }
       })
       .finally(() => {
@@ -89,8 +98,8 @@ const MenuForm = () => {
       });
   };
   return (
-    <div className="relative flex min-h-[calc(100svh-55px)] items-center justify-center bg-white ">
-      <div className="relative z-10 flex h-full w-full bg-white py-5 sm:max-h-[45rem] sm:max-w-[45rem] sm:rounded-lg sm:shadow-xl md:py-20">
+    <div className="relative flex min-h-[calc(100svh-55px)] items-center justify-center bg-white md:py-10">
+      <div className="relative z-10 flex h-full w-full bg-white py-5  sm:max-w-[45rem] sm:rounded-lg sm:shadow-xl md:py-20">
         <SuccessLabel successMsg={successMsg} />
         <ErrorLabel errorMsg={errorMsg} func={() => setError([])} />
         <div className="absolute left-0 top-0 hidden items-center gap-2 p-5 sm:flex">
@@ -130,7 +139,7 @@ const MenuForm = () => {
             <input
               type="number"
               className="rounded-md border p-2 px-4 "
-              placeholder="Number of guest"
+              placeholder="Price"
               name="price"
             />
             <label htmlFor="description">Description</label>
