@@ -50,7 +50,7 @@ const ReservationForm = () => {
     const data = new FormData(e.currentTarget);
     let dataReservation = {
       reservationDate: data.get("datetime"),
-      reservationDate: data.get("numberofguest"),
+      numberOfGuest: data.get("numberofguest"),
       user: dataUser.id,
       restaurant: restaurantData.id,
     };
@@ -107,23 +107,27 @@ const ReservationForm = () => {
             onSubmit={handleSubmit}
           >
             <label htmlFor="username">Username</label>
-            <input
-              type="text"
-              className="rounded-md border p-2 px-4"
-              placeholder="username"
-              name="username"
-              value="namanamanamn"
-              disabled
-            />
+            {dataUser != "" && (
+              <input
+                type="text"
+                className="rounded-md border p-2 px-4"
+                placeholder="username"
+                name="username"
+                defaultValue={dataUser.username}
+                disabled
+              />
+            )}
             <label htmlFor="restaurantname">Restaurant Name</label>
-            <input
-              type="text"
-              className="rounded-md border p-2 px-4"
-              placeholder="Restaurant Name"
-              name="restaurantname"
-              value="restaurantname"
-              disabled
-            />
+            {restaurantData != null && (
+              <input
+                type="text"
+                className="rounded-md border p-2 px-4"
+                placeholder="Restaurant Name"
+                name="restaurantname"
+                defaultValue={restaurantData.name}
+                disabled
+              />
+            )}
             <label htmlFor="datetime">Datetime</label>
             <input
               type="datetime-local"
