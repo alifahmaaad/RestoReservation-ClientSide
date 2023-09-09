@@ -1,21 +1,23 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
-import Restaurant from "./pages/Restaurant";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import Restaurant from "./pages/restaurant/Restaurant";
+import Login from "./pages/user/Login";
+import Register from "./pages/user/Register";
 import Navbar from "./assets/components/Navbar";
 import Footer from "./assets/components/Footer";
 import { useEffect, useState } from "react";
-import Reservations from "./pages/Reservations";
-import ReservationForm from "./pages/ReservationForm";
-import MenuForm from "./pages/MenuForm";
-import User from "./pages/User";
-import CreateRestaurant from "./pages/CreateRestaurant";
-import UpdateUser from "./pages/UpdateUser";
-import UpdateRestaurant from "./pages/UpdateRestaurant";
-import UpdateMenu from "./pages/UpdateMenu";
-import UpdateReservation from "./pages/UpdateReservation";
+import Reservations from "./pages/reservation/Reservations";
+import ReservationForm from "./pages/reservation/ReservationForm";
+import MenuForm from "./pages/menu/MenuForm";
+import User from "./pages/user/User";
+import CreateRestaurant from "./pages/restaurant/CreateRestaurant";
+import UpdateUser from "./pages/user/UpdateUser";
+import UpdateRestaurant from "./pages/restaurant/UpdateRestaurant";
+import UpdateMenu from "./pages/menu/UpdateMenu";
+import UpdateReservation from "./pages/reservation/UpdateReservation";
 import MapLeaflet from "./assets/components/MapLeaflet";
+import DeleteReservation from "./pages/reservation/DeleteReservation";
+import DeleteMenu from "./pages/menu/DeleteMenu";
 
 function App() {
   const [isTop, setIsTop] = useState(true);
@@ -32,7 +34,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/restaurant" element={<Restaurant />} />
+        <Route path="/restaurant/:id" element={<Restaurant />} />
         <Route path="/user" element={<User />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register role="Customer" />} />
@@ -46,8 +48,10 @@ function App() {
         <Route path="/reservation" element={<Reservations />} />
         <Route path="/reservation/add/:idResto" element={<ReservationForm />} />
         <Route path="/reservation/update/:id" element={<UpdateReservation />} />
+        <Route path="/reservation/delete/:id" element={<DeleteReservation />} />
         <Route path="/menu/add" element={<MenuForm />} />
         <Route path="/menu/update/:id" element={<UpdateMenu />} />
+        <Route path="/menu/delete/:id" element={<DeleteMenu />} />
         <Route path="/map" element={<MapLeaflet />} />
       </Routes>
       <Footer />

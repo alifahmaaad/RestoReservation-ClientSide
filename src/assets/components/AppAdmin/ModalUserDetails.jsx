@@ -1,4 +1,4 @@
-const ModalUserDetail = ({ open }) => {
+const ModalUserDetail = ({ open, userData }) => {
   return (
     <div className="font-sans">
       <div
@@ -9,8 +9,8 @@ const ModalUserDetail = ({ open }) => {
         }
       >
         <p className="font-bold">Details</p>
-        <p>Role : </p>
-        <p>E-mail : a@a.com</p>
+        <p>Role : {userData.role}</p>
+        <p>E-mail : {userData.email}</p>
       </div>
     </div>
   );

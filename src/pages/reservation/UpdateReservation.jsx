@@ -2,11 +2,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import ErrorLabel from "../assets/components/ErrorLabel";
-import SuccessLabel from "../assets/components/SuccessLabel";
-import Loading from "../assets/components/Loading";
+import ErrorLabel from "../../assets/components/ErrorLabel";
+import SuccessLabel from "../../assets/components/SuccessLabel";
+import Loading from "../../assets/components/Loading";
 
-const ReservationForm = () => {
+const UpdateReservation = () => {
   const { token, dataUser } = useSelector(
     (state) => state.dataUserResponseRedux,
   );
@@ -15,31 +15,33 @@ const ReservationForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setError] = useState([]);
   const [successMsg, setSuccess] = useState([]);
-  const [restaurantData, setRestaurantData] = useState(null);
+  const [reservationData, setReservationData] = useState(null);
   useEffect(() => {
     if (dataUser != "" && token != "") {
-      dataUser.role == "Restaurant_Admin" && navigate("/");
-      dataUser.role == "Customer" && getRestaurant();
+      dataUser.role == "Restaurant_Admin" ? navigate("/") : getReservation();
     } else {
       navigate("/login");
     }
   }, []);
 
-  const getRestaurant = async () => {
-    axios
-      .get(`${import.meta.env.VITE_HOST_URL}/api/restaurant/${param.idResto}`, {
+  const getReservation = async () => {
+    await axios
+      .get(`${import.meta.env.VITE_HOST_URL}/api/reservation/${param.id}`, {
         headers: {
           Authorization: "Bearer " + token,
         },
       })
       .then((res) => {
-        setRestaurantData(res.data.payload);
+        setReservationData(res.data.payload);
       })
       .catch((e) => {
-        if (typeof e.response.data != "object" && e.response.status == 403) {
-          navigate("/login");
-        } else if (e.code == "ERR_NETWORK") {
+        if (e.code == "ERR_NETWORK") {
           setError([...errorMsg, e.message]);
+        } else if (
+          typeof e.response.data != "object" &&
+          e.response.status == 403
+        ) {
+          navigate("/login");
         } else {
           setError([...errorMsg, ...e.response.data.message]);
         }
@@ -49,15 +51,16 @@ const ReservationForm = () => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
     let dataReservation = {
+      id: reservationData.id,
       reservationDate: data.get("datetime"),
       numberOfGuest: data.get("numberofguest"),
-      user: dataUser.id,
-      restaurant: restaurantData.id,
+      user: reservationData.user.id,
+      restaurant: reservationData.restaurant.id,
     };
     setIsLoading(true);
-    axios
-      .post(
-        `${import.meta.env.VITE_HOST_URL}/api/reservation/customer/create`,
+    await axios
+      .put(
+        `${import.meta.env.VITE_HOST_URL}/api/reservation/customer/update`,
         dataReservation,
         {
           headers: {
@@ -74,10 +77,13 @@ const ReservationForm = () => {
         }, 1500);
       })
       .catch((e) => {
-        if (typeof e.response.data != "object" && e.response.status == 403) {
-          navigate("/login");
-        } else if (e.code == "ERR_NETWORK") {
+        if (e.code == "ERR_NETWORK") {
           setError([...errorMsg, e.message]);
+        } else if (
+          typeof e.response.data != "object" &&
+          e.response.status == 403
+        ) {
+          navigate("/login");
         } else {
           setError([...errorMsg, ...e.response.data.message]);
         }
@@ -100,59 +106,61 @@ const ReservationForm = () => {
         {isLoading && <Loading />}
         <div className="flex w-full flex-col items-center justify-center sm:max-w-7xl">
           <p className="font-serif text-3xl font-bold text-[#FFB100]">
-            Reservation
+            Update Reservation Data
           </p>
-          <form
-            className="flex h-full w-full flex-col justify-center gap-3 px-10"
-            onSubmit={handleSubmit}
-          >
-            <label htmlFor="username">Username</label>
-            {dataUser != "" && (
+          {reservationData != null ? (
+            <form
+              className="flex h-full w-full flex-col justify-center gap-3 px-10"
+              onSubmit={handleSubmit}
+            >
+              <label htmlFor="username">Username</label>
               <input
                 type="text"
                 className="rounded-md border p-2 px-4"
                 placeholder="username"
                 name="username"
-                defaultValue={dataUser.username}
+                value={dataUser.username}
                 disabled
               />
-            )}
-            <label htmlFor="restaurantname">Restaurant Name</label>
-            {restaurantData != null && (
+              <label htmlFor="restaurantname">Restaurant Name</label>
               <input
                 type="text"
                 className="rounded-md border p-2 px-4"
-                placeholder="Restaurant Name"
+                placeholder="restaurantname"
                 name="restaurantname"
-                defaultValue={restaurantData.name}
+                value={reservationData.restaurant.name}
                 disabled
               />
-            )}
-            <label htmlFor="datetime">Datetime</label>
-            <input
-              type="datetime-local"
-              className="rounded-md border p-2 px-4"
-              placeholder="Datetime"
-              name="datetime"
-            />
-            <label htmlFor="numberofguest">Number of guest</label>
-            <input
-              type="number"
-              className="rounded-md border p-2 px-4 "
-              placeholder="Number of guest"
-              name="numberofguest"
-            />
-            <button
-              className="rounded-full bg-[#FFB100] py-3 text-white"
-              type="submit"
-            >
-              Reservation
-            </button>
-          </form>
+              <label htmlFor="datetime">Datetime</label>
+              <input
+                type="datetime-local"
+                className="rounded-md border p-2 px-4"
+                placeholder="Datetime"
+                name="datetime"
+                defaultValue={reservationData.reservationDate}
+              />
+              <label htmlFor="numberofguest">Number of guest</label>
+              <input
+                type="number"
+                className="rounded-md border p-2 px-4 "
+                placeholder="Number of guest"
+                name="numberofguest"
+                defaultValue={reservationData.numberOfGuest}
+              />
+              <button
+                className="rounded-full bg-[#FFB100] py-3 text-white"
+                type="submit"
+              >
+                Reservation
+              </button>
+            </form>
+          ) : (
+            <Loading />
+          )}
         </div>
       </div>
     </div>
   );
 };
 
-export default ReservationForm;
+export default UpdateReservation;

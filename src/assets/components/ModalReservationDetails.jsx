@@ -1,4 +1,4 @@
-const ModalReservationDetail = ({ open }) => {
+const ModalReservationDetail = ({ open, reservationData }) => {
   return (
     <div className="font-sans">
       <div
@@ -9,9 +9,9 @@ const ModalReservationDetail = ({ open }) => {
         }
       >
         <p className="font-bold">Details</p>
-        <p>Fullname :</p>
-        <p>Username : test-123</p>
-        <p>E-mail : a@a.com</p>
+        <p>Fullname : {reservationData.user.fullName}</p>
+        <p>Username : {reservationData.user.username}</p>
+        <p>E-mail : {reservationData.user.email}</p>
       </div>
     </div>
   );

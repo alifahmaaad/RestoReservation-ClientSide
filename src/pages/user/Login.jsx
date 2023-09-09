@@ -2,10 +2,10 @@ import axios from "axios";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import ErrorLabel from "../assets/components/ErrorLabel";
-import { set } from "../redux/slices/dataUserResponse";
-import SuccessLabel from "../assets/components/SuccessLabel";
-import Loading from "../assets/components/Loading";
+import ErrorLabel from "../../assets/components/ErrorLabel";
+import { set } from "../../redux/slices/dataUserResponse";
+import SuccessLabel from "../../assets/components/SuccessLabel";
+import Loading from "../../assets/components/Loading";
 
 const Login = () => {
   const [showPass, setShowPass] = useState(false);

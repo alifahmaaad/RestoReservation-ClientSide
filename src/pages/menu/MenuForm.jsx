@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import SuccessLabel from "../assets/components/SuccessLabel";
-import ErrorLabel from "../assets/components/ErrorLabel";
-import Loading from "../assets/components/Loading";
+import SuccessLabel from "../../assets/components/SuccessLabel";
+import ErrorLabel from "../../assets/components/ErrorLabel";
+import Loading from "../../assets/components/Loading";
 import { useSelector } from "react-redux";
 
 const MenuForm = () => {
@@ -33,10 +33,13 @@ const MenuForm = () => {
         setRestoName(res.data.payload.name);
       })
       .catch((e) => {
-        if (typeof e.response.data != "object" && e.response.status == 403) {
-          navigate("/login");
-        } else if (e.code == "ERR_NETWORK") {
+        if (e.code == "ERR_NETWORK") {
           setError([...errorMsg, e.message]);
+        } else if (
+          typeof e.response.data != "object" &&
+          e.response.status == 403
+        ) {
+          navigate("/login");
         } else {
           setError([...errorMsg, ...e.response.data.message]);
         }
@@ -82,10 +85,13 @@ const MenuForm = () => {
         }, 1000);
       })
       .catch((e) => {
-        if (typeof e.response.data != "object" && e.response.status == 403) {
-          navigate("/login");
-        } else if (e.code == "ERR_NETWORK") {
+        if (e.code == "ERR_NETWORK") {
           setError([...errorMsg, e.message]);
+        } else if (
+          typeof e.response.data != "object" &&
+          e.response.status == 403
+        ) {
+          navigate("/login");
         } else {
           setError([...errorMsg, ...e.response.data.message]);
         }
