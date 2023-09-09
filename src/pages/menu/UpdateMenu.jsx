@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import SuccessLabel from "../assets/components/SuccessLabel";
-import ErrorLabel from "../assets/components/ErrorLabel";
-import Loading from "../assets/components/Loading";
+import SuccessLabel from "../../assets/components/SuccessLabel";
+import ErrorLabel from "../../assets/components/ErrorLabel";
+import Loading from "../../assets/components/Loading";
 import { useSelector } from "react-redux";
 const UpdateMenu = () => {
   const { token, dataUser } = useSelector(

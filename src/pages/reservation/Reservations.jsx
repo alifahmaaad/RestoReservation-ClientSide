@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import ReservationCard from "../assets/components/ReservationCard";
+import ReservationCard from "../../assets/components/ReservationCard";
 import { useEffect } from "react";
 
 const Reservations = () => {

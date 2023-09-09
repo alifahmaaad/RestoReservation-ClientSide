@@ -1,20 +1,20 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
-import Restaurant from "./pages/Restaurant";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import Restaurant from "./pages/restaurant/Restaurant";
+import Login from "./pages/user/Login";
+import Register from "./pages/user/Register";
 import Navbar from "./assets/components/Navbar";
 import Footer from "./assets/components/Footer";
 import { useEffect, useState } from "react";
-import Reservations from "./pages/Reservations";
-import ReservationForm from "./pages/ReservationForm";
-import MenuForm from "./pages/MenuForm";
-import User from "./pages/User";
-import CreateRestaurant from "./pages/CreateRestaurant";
-import UpdateUser from "./pages/UpdateUser";
-import UpdateRestaurant from "./pages/UpdateRestaurant";
-import UpdateMenu from "./pages/UpdateMenu";
-import UpdateReservation from "./pages/UpdateReservation";
+import Reservations from "./pages/reservation/Reservations";
+import ReservationForm from "./pages/reservation/ReservationForm";
+import MenuForm from "./pages/menu/MenuForm";
+import User from "./pages/user/User";
+import CreateRestaurant from "./pages/restaurant/CreateRestaurant";
+import UpdateUser from "./pages/user/UpdateUser";
+import UpdateRestaurant from "./pages/restaurant/UpdateRestaurant";
+import UpdateMenu from "./pages/menu/UpdateMenu";
+import UpdateReservation from "./pages/reservation/UpdateReservation";
 import MapLeaflet from "./assets/components/MapLeaflet";
 
 function App() {
