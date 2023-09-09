@@ -45,10 +45,13 @@ const UpdateMenu = () => {
         });
       })
       .catch((e) => {
-        if (typeof e.response.data != "object" && e.response.status == 403) {
-          navigate("/login");
-        } else if (e.code == "ERR_NETWORK") {
+        if (e.code == "ERR_NETWORK") {
           setError([...errorMsg, e.message]);
+        } else if (
+          typeof e.response.data != "object" &&
+          e.response.status == 403
+        ) {
+          navigate("/login");
         } else {
           setError([...errorMsg, ...e.response.data.message]);
         }
@@ -98,10 +101,13 @@ const UpdateMenu = () => {
       })
       .catch((e) => {
         console.log(e);
-        if (typeof e.response.data != "object" && e.response.status == 403) {
-          navigate("/login");
-        } else if (e.code == "ERR_NETWORK") {
+        if (e.code == "ERR_NETWORK") {
           setError([...errorMsg, e.message]);
+        } else if (
+          typeof e.response.data != "object" &&
+          e.response.status == 403
+        ) {
+          navigate("/login");
         } else {
           setError([...errorMsg, ...e.response.data.message]);
         }

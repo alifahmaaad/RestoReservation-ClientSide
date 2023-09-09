@@ -26,7 +26,7 @@ const UpdateReservation = () => {
   }, []);
 
   const getReservation = async () => {
-    axios
+    await axios
       .get(`${import.meta.env.VITE_HOST_URL}/api/reservation/${param.id}`, {
         headers: {
           Authorization: "Bearer " + token,
@@ -36,11 +36,13 @@ const UpdateReservation = () => {
         setReservationData(res.data.payload);
       })
       .catch((e) => {
-        console.log(e);
-        if (typeof e.response.data != "object" && e.response.status == 403) {
-          navigate("/login");
-        } else if (e.code == "ERR_NETWORK") {
+        if (e.code == "ERR_NETWORK") {
           setError([...errorMsg, e.message]);
+        } else if (
+          typeof e.response.data != "object" &&
+          e.response.status == 403
+        ) {
+          navigate("/login");
         } else {
           setError([...errorMsg, ...e.response.data.message]);
         }
@@ -57,7 +59,7 @@ const UpdateReservation = () => {
       restaurant: reservationData.restaurant.id,
     };
     setIsLoading(true);
-    axios
+    await axios
       .put(
         `${import.meta.env.VITE_HOST_URL}/api/reservation/customer/update`,
         dataReservation,
@@ -76,11 +78,13 @@ const UpdateReservation = () => {
         }, 1500);
       })
       .catch((e) => {
-        if (typeof e.response.data != "object" && e.response.status == 403) {
-          // navigate("/login");
-          console.log(e);
-        } else if (e.code == "ERR_NETWORK") {
+        if (e.code == "ERR_NETWORK") {
           setError([...errorMsg, e.message]);
+        } else if (
+          typeof e.response.data != "object" &&
+          e.response.status == 403
+        ) {
+          navigate("/login");
         } else {
           setError([...errorMsg, ...e.response.data.message]);
         }

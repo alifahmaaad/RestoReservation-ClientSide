@@ -60,10 +60,13 @@ const UpdateRestaurant = () => {
         });
       })
       .catch((e) => {
-        if (typeof e.response.data != "object" && e.response.status == 403) {
-          navigate("/login");
-        } else if (e.code == "ERR_NETWORK") {
+        if (e.code == "ERR_NETWORK") {
           setError([...errorMsg, e.message]);
+        } else if (
+          typeof e.response.data != "object" &&
+          e.response.status == 403
+        ) {
+          navigate("/login");
         } else {
           setError([...errorMsg, ...e.response.data.message]);
         }
@@ -111,10 +114,13 @@ const UpdateRestaurant = () => {
         }, 1000);
       })
       .catch((e) => {
-        if (typeof e.response.data != "object" && e.response.status == 403) {
-          navigate("/login");
-        } else if (e.code == "ERR_NETWORK") {
+        if (e.code == "ERR_NETWORK") {
           setError([...errorMsg, e.message]);
+        } else if (
+          typeof e.response.data != "object" &&
+          e.response.status == 403
+        ) {
+          navigate("/login");
         } else {
           setError([...errorMsg, ...e.response.data.message]);
         }
