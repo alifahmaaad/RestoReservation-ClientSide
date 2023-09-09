@@ -108,9 +108,10 @@ const Register = ({ role }) => {
               <input
                 type="checkbox"
                 onChange={() => setShowPass(!showPass)}
+                id="showPass"
                 className="checked:accent-[#FFB100]"
               />
-              <label htmlFor="showPass">Show Password</label>
+              <label for="showPass">Show Password</label>
             </div>
             <button
               className="rounded-full bg-[#FFB100] py-3 text-white"
