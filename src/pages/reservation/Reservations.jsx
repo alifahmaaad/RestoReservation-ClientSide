@@ -37,7 +37,9 @@ const Reservations = () => {
         },
       })
       .then((res) => {
-        setReservations(res.data.payload);
+        if (res.data.payload != null) {
+          res.data.payload.length > 0 && setReservations(res.data.payload);
+        }
       })
       .catch((e) => {
         console.log(e);
@@ -80,7 +82,6 @@ const Reservations = () => {
         }, 1500);
       })
       .catch((e) => {
-        console.log(e);
         if (e.code == "ERR_NETWORK") {
           setError([...errorMsg, e.message]);
         } else if (
