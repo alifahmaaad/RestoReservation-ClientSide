@@ -1,5 +1,3 @@
-import { useDispatch, useSelector } from "react-redux";
-import { set } from "../redux/slices/dataUserResponse";
 import headerImg from "../assets/img/img.jpg";
 import RestoCard from "../assets/components/RestoCard";
 import { useEffect, useState } from "react";
@@ -17,7 +15,9 @@ const Home = () => {
       .get(`${import.meta.env.VITE_HOST_URL}/api/restaurant/all`)
       .then((res) => {
         if (res.data.payload != null) {
-          res.data.payload.length > 0 && setRestaurants(res.data.payload);
+          res.data.payload.length > 0
+            ? setRestaurants(res.data.payload)
+            : setRestaurants(1);
         }
       })
       .catch((e) => {
@@ -68,9 +68,13 @@ const Home = () => {
       <div className="mx-auto h-full w-[calc(100%_-_48px)] max-w-screen-xl py-6 md:w-[calc(100%_-_64px)] lg:pb-16">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-10 lg:grid-cols-4 ">
           {restaurants != null ? (
-            Object.entries(restaurants).map((restaurant, key) => {
-              return <RestoCard dataResto={restaurant[1]} key={key} />;
-            })
+            restaurants == 1 ? (
+              <p>No restaurant Found</p>
+            ) : (
+              Object.entries(restaurants).map((restaurant, key) => {
+                return <RestoCard dataResto={restaurant[1]} key={key} />;
+              })
+            )
           ) : (
             <div className="flex h-full w-[calc(100vw_-_50px)] items-center justify-center gap-2">
               <p className="text-sm font-bold">Loading</p>

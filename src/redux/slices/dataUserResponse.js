@@ -11,8 +11,12 @@ export const dataUserResponse = createSlice({
       state.token = action.payload.token;
       state.dataUser = action.payload.user;
     },
+    logout: (state) => {
+      state.token = "";
+      state.dataUser = "";
+    },
   },
 });
-export const { set } = dataUserResponse.actions;
+export const { set, logout } = dataUserResponse.actions;
 
 export default dataUserResponse.reducer;

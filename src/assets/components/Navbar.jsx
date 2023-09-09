@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
-
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../redux/slices/dataUserResponse";
 const Navbar = () => {
   const [navbar, setNavbar] = useState(false);
+  const dispatch = useDispatch();
+  const { dataUser } = useSelector((state) => state.dataUserResponseRedux);
   const changeBackground = () => {
     if (window.scrollY >= 10) {
       setNavbar(true);
@@ -30,41 +33,69 @@ const Navbar = () => {
               <p className="font-mono font-bold">RestoReserve</p>
             </a>
             <ul className="flex items-center gap-5 px-5">
-              <li className="opacity-50 duration-500 hover:opacity-100">
-                <a
-                  href="/"
-                  className="border-b-4 border-[#FFB100] p-2 px-5 font-semibold"
-                >
-                  Restaurant
+              <li
+                className={
+                  (window.location.pathname == "/"
+                    ? "opacity-100 after:w-full "
+                    : "opacity-50 after:w-0 ") +
+                  "flex flex-col pt-2  duration-500 after:h-1 after:bg-[#FFB100] after:duration-700 after:content-[''] hover:opacity-100 hover:after:w-full"
+                }
+              >
+                <a href="/" className=" px-5 font-semibold ">
+                  Home
                 </a>
               </li>
-              <li>
-                <a
-                  href="/reservation"
-                  className="border-b-4 border-[#FFB100] p-2 px-5 font-semibold"
-                >
+              <li
+                className={
+                  (window.location.pathname == "/reservation"
+                    ? "opacity-100 after:w-full "
+                    : "opacity-50 after:w-0 ") +
+                  "flex flex-col pt-2  duration-500 after:h-1 after:bg-[#FFB100] after:duration-700 after:content-[''] hover:opacity-100 hover:after:w-full"
+                }
+              >
+                <a href="/reservation" className=" px-5 font-semibold ">
                   Reservation
                 </a>
               </li>
-              <li className="opacity-50 duration-500 hover:opacity-100">
-                <a
-                  href="/user"
-                  className="border-b-4 border-[#FFB100] p-2 px-5 font-semibold"
+              {dataUser.role == "App_Admin" && (
+                <li
+                  className={
+                    (window.location.pathname == "/user"
+                      ? "opacity-100 after:w-full "
+                      : "opacity-50 after:w-0 ") +
+                    "flex flex-col pt-2  duration-500 after:h-1 after:bg-[#FFB100] after:duration-700 after:content-[''] hover:opacity-100 hover:after:w-full"
+                  }
                 >
-                  User
-                </a>
-              </li>
+                  <a href="/user" className=" px-5 font-semibold ">
+                    User
+                  </a>
+                </li>
+              )}
             </ul>
           </div>
-          <div>
-            <a
-              className="flex min-w-[8rem] items-center rounded-full bg-[#ffedc3] px-2 py-1 shadow-md duration-500 hover:scale-110 hover:shadow-lg"
-              href="/login"
-            >
-              <p className="w-full text-center text-sm font-semibold md:text-base">
-                login
-              </p>
-            </a>
+          <div className="flex">
+            {dataUser == "" ? (
+              <a
+                className="flex min-w-[8rem] items-center rounded-full bg-[#ffedc3] px-2 py-1 shadow-md duration-500 hover:scale-110 hover:shadow-lg"
+                href="/login"
+              >
+                <p className="w-full text-center text-sm font-semibold md:text-base">
+                  login
+                </p>
+              </a>
+            ) : (
+              <a
+                className="flex min-w-[8rem] items-center rounded-full bg-[#ffedc3] px-2 py-1 shadow-md duration-500 hover:scale-110 hover:shadow-lg"
+                href=""
+                onClick={(e) => {
+                  dispatch(logout());
+                }}
+              >
+                <p className="w-full text-center text-sm font-semibold md:text-base">
+                  logout
+                </p>
+              </a>
+            )}
           </div>
         </div>
       </div>
