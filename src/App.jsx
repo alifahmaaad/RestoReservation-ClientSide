@@ -16,6 +16,7 @@ import UpdateRestaurant from "./pages/restaurant/UpdateRestaurant";
 import UpdateMenu from "./pages/menu/UpdateMenu";
 import UpdateReservation from "./pages/reservation/UpdateReservation";
 import MapLeaflet from "./assets/components/MapLeaflet";
+import DeleteReservation from "./pages/reservation/DeleteReservation";
 
 function App() {
   const [isTop, setIsTop] = useState(true);
@@ -46,6 +47,7 @@ function App() {
         <Route path="/reservation" element={<Reservations />} />
         <Route path="/reservation/add/:idResto" element={<ReservationForm />} />
         <Route path="/reservation/update/:id" element={<UpdateReservation />} />
+        <Route path="/reservation/delete/:id" element={<DeleteReservation />} />
         <Route path="/menu/add" element={<MenuForm />} />
         <Route path="/menu/update/:id" element={<UpdateMenu />} />
         <Route path="/map" element={<MapLeaflet />} />

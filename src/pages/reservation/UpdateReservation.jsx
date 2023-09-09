@@ -18,8 +18,7 @@ const UpdateReservation = () => {
   const [reservationData, setReservationData] = useState(null);
   useEffect(() => {
     if (dataUser != "" && token != "") {
-      dataUser.role == "Restaurant_Admin" && navigate("/");
-      dataUser.role == "Customer" && getReservation();
+      dataUser.role == "Restaurant_Admin" ? navigate("/") : getReservation();
     } else {
       navigate("/login");
     }
@@ -109,7 +108,7 @@ const UpdateReservation = () => {
           <p className="font-serif text-3xl font-bold text-[#FFB100]">
             Update Reservation Data
           </p>
-          {reservationData != null && (
+          {reservationData != null ? (
             <form
               className="flex h-full w-full flex-col justify-center gap-3 px-10"
               onSubmit={handleSubmit}
@@ -155,6 +154,8 @@ const UpdateReservation = () => {
                 Reservation
               </button>
             </form>
+          ) : (
+            <Loading />
           )}
         </div>
       </div>
