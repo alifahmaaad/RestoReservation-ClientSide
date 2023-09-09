@@ -1,6 +1,11 @@
-import { useState } from "react";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-const ModalMenuDetail = ({ open, func }) => {
+const ModalMenuDetail = ({ open, func, dataMenu, dataResto }) => {
+  const { dataUser } = useSelector((state) => state.dataUserResponseRedux);
+  const navigate = useNavigate();
+  useEffect(() => {}, []);
   return (
     <div className={open ? "block" : "hidden"}>
       <div className="absolute left-0 top-0 z-50 h-full w-full bg-gray-500 bg-opacity-70 blur-xl" />
@@ -22,24 +27,30 @@ const ModalMenuDetail = ({ open, func }) => {
             <p className="py-4 font-serif font-bold ">Menu Details</p>
             <div className="flex h-full w-full flex-col justify-between">
               <div>
-                <p>Food Name : </p>
-                <p>Price : </p>
-                <p>Description :</p>
+                <p>Food Name : {dataMenu.name}</p>
+                <p>Price : {dataMenu.price}</p>
+                <p>Description : {dataMenu.description}</p>
               </div>
-              <div className="flex gap-5">
-                <a
-                  href="#"
-                  className="font-mono text-[#FFB100] hover:drop-shadow-lg"
-                >
-                  Edit Menu
-                </a>
-                <a
-                  href="#"
-                  className="font-mono text-[#e52535] hover:drop-shadow-lg"
-                >
-                  Delete Menu
-                </a>
-              </div>
+              {(dataUser.role != "Customer" || dataUser == "") &&
+                dataUser.role == "Restaurant_Admin" &&
+                dataResto.userOwner.id == dataUser.id && (
+                  <div className="flex gap-5">
+                    <a
+                      href=""
+                      onClick={() => navigate("/menu/update/" + dataMenu.id)}
+                      className="font-mono text-[#FFB100] hover:drop-shadow-lg"
+                    >
+                      Edit Menu
+                    </a>
+                    <a
+                      href=""
+                      onClick={() => navigate("/menu/delete/" + dataMenu.id)}
+                      className="font-mono text-[#e52535] hover:drop-shadow-lg"
+                    >
+                      Delete Menu
+                    </a>
+                  </div>
+                )}
             </div>
           </div>
         </div>

@@ -33,7 +33,11 @@ const ReservationForm = () => {
         },
       })
       .then((res) => {
-        setRestaurantData(res.data.payload);
+        if (res.data.payload != null) {
+          res.data.payload.length == undefined || res.data.payload.length > 0
+            ? setRestaurantData(res.data.payload)
+            : res.data.payload.length == 0 && setRestaurantData(null);
+        }
       })
       .catch((e) => {
         if (e.code == "ERR_NETWORK") {

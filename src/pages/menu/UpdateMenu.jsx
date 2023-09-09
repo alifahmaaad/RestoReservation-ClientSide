@@ -79,6 +79,7 @@ const UpdateMenu = () => {
     if (dataform.get("photo").size != 0) {
       data = { ...data, photo: data.get("photo") };
     }
+    console.log(data);
     setIsLoading(true);
     await axios
       .put(
@@ -118,7 +119,7 @@ const UpdateMenu = () => {
   };
   return (
     <div className="relative flex min-h-[calc(100svh-55px)] items-center justify-center bg-white ">
-      <div className="relative z-10 flex h-full w-full bg-white py-5 sm:max-h-[45rem] sm:max-w-[45rem] sm:rounded-lg sm:shadow-xl md:py-20">
+      <div className="relative z-10 flex h-full w-full bg-white py-5  sm:max-w-[45rem] sm:rounded-lg sm:shadow-xl md:py-20">
         <SuccessLabel successMsg={successMsg} />
         <ErrorLabel errorMsg={errorMsg} func={() => setError([])} />
         <div className="absolute left-0 top-0 hidden items-center gap-2 p-5 sm:flex">
@@ -139,10 +140,10 @@ const UpdateMenu = () => {
             <label htmlFor="restaurantname">Restaurant Name</label>
             <input
               type="text"
-              className="rounded-md border p-2 px-4 before:content-['Hello\_World']"
+              className="rounded-md border p-2 px-4 "
               placeholder="restaurantname"
               name="restaurantname"
-              value="restaurantname"
+              defaultValue={menuData.restoName}
               disabled
             />
             <label htmlFor="name">Menu Name</label>
@@ -151,20 +152,26 @@ const UpdateMenu = () => {
               className="rounded-md border p-2 px-4"
               placeholder="name"
               name="name"
+              defaultValue={menuData.name}
             />
+
             <label htmlFor="price">Price</label>
             <input
               type="number"
               className="rounded-md border p-2 px-4 "
               placeholder="Number of guest"
               name="price"
+              defaultValue={menuData.price}
             />
             <label htmlFor="description">Description</label>
-            <textarea
-              className="rounded-md border p-2 px-4 "
-              placeholder="Description"
-              name="description"
-            />
+            <div className="w-full">
+              <textarea
+                className="w-full rounded-md border p-2 px-4"
+                placeholder="Description"
+                name="description"
+                defaultValue={menuData.description}
+              />
+            </div>
             <label htmlFor="photo">Menu Photo</label>
             <input
               type="file"

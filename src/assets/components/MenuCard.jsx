@@ -1,29 +1,36 @@
 import { useState } from "react";
 import ModalMenuDetail from "./ModalMenuDetail";
 
-const MenuCard = () => {
+const MenuCard = ({ dataMenu, dataResto }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const handleModalOpen = () => {
     setModalOpen(!modalOpen);
   };
   return (
     <div>
-      {modalOpen && <ModalMenuDetail open={true} func={handleModalOpen} />}
+      {modalOpen && (
+        <ModalMenuDetail
+          open={true}
+          func={handleModalOpen}
+          dataMenu={dataMenu}
+          dataResto={dataResto}
+        />
+      )}
       <button
         className="min-h-32 sm:min-h-h-44 md:min-h-h-56 group relative w-32 hover:cursor-pointer sm:w-44 md:w-56"
         onClick={handleModalOpen}
       >
-        <figure className="h-32 w-32 sm:h-44 sm:w-44 md:h-56 md:w-56">
+        <figure className="h-32 w-32 bg-white sm:h-44 sm:w-44 md:h-56 md:w-56">
           <img
             className="h-32 w-32 rounded-xl object-cover sm:h-44 sm:w-44 md:h-56 md:w-56"
-            src="https://placehold.co/600x400"
-            alt=""
+            src={`${import.meta.env.VITE_HOST_URL}/${dataMenu.photo}`}
+            alt={dataMenu.name}
             loading="lazy"
           />
         </figure>
         <div className="px-2 font-semibold">
-          <p>Food Name</p>
-          <p>Rp.50000</p>
+          <p>{dataMenu.name}</p>
+          <p>Rp.{dataMenu.price}</p>
         </div>
         <div className="absolute left-0 top-0 flex h-32 w-32 items-center justify-center rounded-xl bg-black bg-opacity-50 opacity-0 duration-700 group-hover:opacity-100 sm:h-44 sm:w-44 md:h-56 md:w-56">
           <p className="font-bold text-[#FFB100]">Menu Detail</p>
