@@ -119,7 +119,7 @@ const UpdateReservation = () => {
                 className="rounded-md border p-2 px-4"
                 placeholder="username"
                 name="username"
-                value={dataUser.username}
+                value={reservationData.user.username}
                 disabled
               />
               <label htmlFor="restaurantname">Restaurant Name</label>

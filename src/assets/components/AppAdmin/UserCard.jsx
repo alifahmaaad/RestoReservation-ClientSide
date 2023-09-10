@@ -1,8 +1,10 @@
 import { useState } from "react";
 import ModalUserDetail from "./ModalUserDetails";
+import { useNavigate } from "react-router-dom";
 
 const UserCard = ({ userData }) => {
   const [isOpen, SetIsOpen] = useState(false);
+  const navigate = useNavigate();
   return (
     <div className="relative w-full rounded-md px-5 py-2 font-serif shadow-md">
       <div className="flex flex-wrap items-center justify-between">
@@ -13,12 +15,18 @@ const UserCard = ({ userData }) => {
           <p>Username : {userData.username}</p>
         </div>
         <div className="flex gap-5">
-          <a className="font-mono text-[#e52535] hover:drop-shadow-xl" href="#">
+          <button
+            className="font-mono text-[#e52535] hover:drop-shadow-xl"
+            onClick={() => navigate("/user/delete/" + userData.id)}
+          >
             Delete
-          </a>
-          <a className="font-mono text-[#FFB100] hover:drop-shadow-xl" href="#">
+          </button>
+          <button
+            className="font-mono text-[#FFB100] hover:drop-shadow-xl"
+            onClick={() => navigate("/user/update/" + userData.id)}
+          >
             Edit
-          </a>
+          </button>
           <button
             className="font-mono text-[#FFB100] hover:drop-shadow-xl"
             onClick={() => SetIsOpen(!isOpen)}

@@ -75,11 +75,9 @@ const UpdateMenu = () => {
       name: dataform.get("name"),
       price: dataform.get("price"),
       description: dataform.get("description"),
+      photo: dataform.get("photo"),
     };
-    if (dataform.get("photo").size != 0) {
-      data = { ...data, photo: data.get("photo") };
-    }
-    console.log(data);
+
     setIsLoading(true);
     await axios
       .put(
@@ -96,7 +94,7 @@ const UpdateMenu = () => {
         setSuccess([...successMsg, res.data.message]);
         setTimeout(() => {
           if (res.data.status) {
-            navigate("/restaurant/" + idResto);
+            navigate("/restaurant/" + menuData.restoId);
           }
         }, 1000);
       })

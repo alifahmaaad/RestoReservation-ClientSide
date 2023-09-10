@@ -18,6 +18,7 @@ import UpdateReservation from "./pages/reservation/UpdateReservation";
 import MapLeaflet from "./assets/components/MapLeaflet";
 import DeleteReservation from "./pages/reservation/DeleteReservation";
 import DeleteMenu from "./pages/menu/DeleteMenu";
+import DeleteUser from "./pages/user/DeleteUser";
 
 function App() {
   const [isTop, setIsTop] = useState(true);
@@ -38,13 +39,16 @@ function App() {
         <Route path="/user" element={<User />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register role="Customer" />} />
-        <Route path="/user/update" element={<UpdateUser />} />
+        <Route path="/user/update/:id" element={<UpdateUser />} />
+        <Route path="/user/delete/:id" element={<DeleteUser />} />
         <Route
           path="/register/resto"
           element={<Register role="Restaurant_Admin" />}
         />
         <Route path="/resto/create" element={<CreateRestaurant />} />
         <Route path="/resto/update" element={<UpdateRestaurant />} />
+        <Route path="/resto/update/:id" element={<UpdateRestaurant />} />
+        <Route path="/resto/delete/:id" element={<UpdateRestaurant />} />
         <Route path="/reservation" element={<Reservations />} />
         <Route path="/reservation/add/:idResto" element={<ReservationForm />} />
         <Route path="/reservation/update/:id" element={<UpdateReservation />} />

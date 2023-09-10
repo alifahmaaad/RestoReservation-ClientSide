@@ -11,6 +11,7 @@ import axios from "axios";
 import ErrorLabel from "../../assets/components/ErrorLabel";
 import { useSelector } from "react-redux";
 import MenuLabel from "../../assets/components/AddMenulabel";
+import EditRestaurantLabel from "../../assets/components/EditRestaurantLabel";
 
 const Restaurant = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -97,7 +98,14 @@ const Restaurant = () => {
                 {dataUser.role == "Customer" ? (
                   <ReservationLabel idResto={restaurantData.id} />
                 ) : (
-                  <MenuLabel />
+                  <div className="fle-col flex gap-2">
+                    <MenuLabel />
+                    <EditRestaurantLabel
+                      idResto={
+                        dataUser.role == "App_Admin" && restaurantData.id
+                      }
+                    />
+                  </div>
                 )}
               </div>
               <div className="my-2 flex flex-wrap gap-2">

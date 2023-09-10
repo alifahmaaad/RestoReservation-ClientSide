@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ErrorLabel from "../../assets/components/ErrorLabel";
 import { useSelector } from "react-redux";
+import SuccessLabel from "../../assets/components/SuccessLabel";
 
 const DeleteReservation = () => {
   const param = useParams();

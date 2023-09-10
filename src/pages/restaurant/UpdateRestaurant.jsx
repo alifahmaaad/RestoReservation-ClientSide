@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import TagLabel from "../../assets/components/TagLabel";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import MapLeaflet from "../../assets/components/MapLeaflet";
@@ -28,24 +28,31 @@ const UpdateRestaurant = () => {
   const { token, dataUser } = useSelector(
     (state) => state.dataUserResponseRedux,
   );
+  const param = useParams();
   useEffect(() => {
     if (dataUser != "" && token != "") {
+      (param.id != undefined || param.id != null) &&
+        dataUser.role != "App_Admin" &&
+        navigate("/");
       dataUser.role == "Customer" && navigate("/");
       dataUser.role == "Restaurant_Admin" && getDataResto();
+      dataUser.role == "App_Admin" && getDataResto();
     } else {
       navigate("/login");
     }
   }, []);
   const getDataResto = async () => {
+    const url =
+      param.id != undefined || param.id != null
+        ? `${import.meta.env.VITE_HOST_URL}/api/restaurant/` + param.id
+        : `${import.meta.env.VITE_HOST_URL}/api/restaurant/owner/` +
+          dataUser.id;
     await axios
-      .get(
-        `${import.meta.env.VITE_HOST_URL}/api/restaurant/owner/` + dataUser.id,
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
+      .get(url, {
+        headers: {
+          Authorization: "Bearer " + token,
         },
-      )
+      })
       .then((res) => {
         setDataResto({
           ...restoData,
@@ -84,16 +91,13 @@ const UpdateRestaurant = () => {
     let filledData = {
       id: restoData.id,
       name: data.get("name"),
-      owner: dataUser.id,
+      owner: restoData.ownerId,
       tags: JSON.stringify(restoData.tags),
       address: data.get("address"),
       location: JSON.stringify(restoData.location),
+      photo: data.get("photo"),
     };
-    if (data.get("photo").size != 0) {
-      filledData = { ...filledData, photo: data.get("photo") };
-    }
     setIsLoading(true);
-    console.log(filledData);
     await axios
       .put(
         `${import.meta.env.VITE_HOST_URL}/api/restaurant/update`,
