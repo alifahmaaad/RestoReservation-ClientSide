@@ -102,7 +102,9 @@ const Navbar = () => {
           </div>
           <div
             className={
-              (isOpen ? "h-full w-screen opacity-100" : "w-0 px-0 opacity-0") +
+              (isOpen
+                ? "h-full w-screen opacity-100"
+                : "h-full w-0 px-0 opacity-0") +
               " nav fixed left-0 top-0 z-30 flex flex-col justify-between gap-5 overflow-hidden bg-white p-5 pt-14 font-semibold shadow-lg duration-700"
             }
           >
@@ -146,7 +148,29 @@ const Navbar = () => {
                 </li>
               )}
             </ul>
-            {/* <div className="p-5">test</div> */}
+            <div className="p-5">
+              {dataUser == "" ? (
+                <a
+                  className="flex min-w-[8rem] items-center rounded-full bg-[#ffedc3] px-2 py-1 shadow-md duration-500 hover:scale-110 hover:shadow-lg"
+                  href="/login"
+                >
+                  <p className="w-full text-center text-sm font-semibold md:text-base">
+                    login
+                  </p>
+                </a>
+              ) : (
+                <button
+                  className="flex min-w-[8rem] items-center rounded-full bg-[#ffedc3] px-2 py-1 shadow-md duration-500 hover:scale-110 hover:shadow-lg"
+                  onClick={(e) => {
+                    dispatch(logout());
+                  }}
+                >
+                  <p className="w-full text-center text-sm font-semibold md:text-base">
+                    logout
+                  </p>
+                </button>
+              )}
+            </div>
           </div>
           <div className="hidden md:flex">
             {dataUser == "" ? (
@@ -159,9 +183,8 @@ const Navbar = () => {
                 </p>
               </a>
             ) : (
-              <a
+              <button
                 className="flex min-w-[8rem] items-center rounded-full bg-[#ffedc3] px-2 py-1 shadow-md duration-500 hover:scale-110 hover:shadow-lg"
-                href=""
                 onClick={(e) => {
                   dispatch(logout());
                 }}
@@ -169,7 +192,7 @@ const Navbar = () => {
                 <p className="w-full text-center text-sm font-semibold md:text-base">
                   logout
                 </p>
-              </a>
+              </button>
             )}
           </div>
         </div>
