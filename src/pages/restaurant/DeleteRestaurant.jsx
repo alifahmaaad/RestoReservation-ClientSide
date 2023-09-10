@@ -5,7 +5,7 @@ import ErrorLabel from "../../assets/components/ErrorLabel";
 import { useSelector } from "react-redux";
 import SuccessLabel from "../../assets/components/SuccessLabel";
 
-const DeleteReservation = () => {
+const DeleteRestaurant = () => {
   const param = useParams();
   const [errorMsg, setError] = useState([]);
   const [successMsg, setSuccess] = useState([]);
@@ -18,11 +18,14 @@ const DeleteReservation = () => {
   }, []);
   const handleDelete = async () => {
     await axios
-      .delete(`${import.meta.env.VITE_HOST_URL}/api/reservation/${param.id}`, {
-        headers: {
-          Authorization: "Bearer " + token,
+      .delete(
+        `${import.meta.env.VITE_HOST_URL}/api/restaurant/delete/${param.id}`,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
         },
-      })
+      )
       .then((res) => {
         setSuccess([...successMsg, res.data.message]);
         setTimeout(() => {
@@ -54,4 +57,4 @@ const DeleteReservation = () => {
   );
 };
 
-export default DeleteReservation;
+export default DeleteRestaurant;

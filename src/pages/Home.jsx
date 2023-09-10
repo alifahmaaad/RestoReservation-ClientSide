@@ -7,9 +7,10 @@ import ErrorLabel from "../assets/components/ErrorLabel";
 const Home = () => {
   const [restaurants, setRestaurants] = useState(null);
   const [errorMsg, setError] = useState([]);
+  const [searchText, setSearchText] = useState("");
   useEffect(() => {
     getRestaurants();
-  }, []);
+  }, [searchText]);
   const getRestaurants = async () => {
     await axios
       .get(`${import.meta.env.VITE_HOST_URL}/api/restaurant/all`)
@@ -48,6 +49,7 @@ const Home = () => {
             type="text"
             placeholder="Filter Search"
             className="h-full w-full rounded-full px-10 focus:outline-none"
+            onChange={(e) => setSearchText(e.target.value)}
           />
         </div>
         <div className="absolute bottom-0 left-0 right-0 top-0 -z-10 w-full overflow-hidden rounded-2xl opacity-70">
@@ -66,22 +68,24 @@ const Home = () => {
         </p>
       </div>
       <div className="mx-auto h-full w-[calc(100%_-_48px)] max-w-screen-xl py-6 md:w-[calc(100%_-_64px)] lg:pb-16">
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-10 lg:grid-cols-4 ">
-          {restaurants != null ? (
-            restaurants == 1 ? (
-              <p>No restaurant Found</p>
-            ) : (
-              Object.entries(restaurants).map((restaurant, key) => {
-                return <RestoCard dataResto={restaurant[1]} key={key} />;
-              })
-            )
+        {restaurants != null ? (
+          restaurants == 1 ? (
+            <p>No restaurant Found</p>
           ) : (
-            <div className="flex h-full w-[calc(100vw_-_50px)] items-center justify-center gap-2">
-              <p className="text-sm font-bold">Loading</p>
-              <div className="h-5 w-5 animate-spin rounded-full border-t-2 border-black" />
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-10 lg:grid-cols-4 ">
+              {Object.entries(restaurants)
+                .filter((resto) => resto[1].name.includes(searchText))
+                .map((restaurant, key) => {
+                  return <RestoCard dataResto={restaurant[1]} key={key} />;
+                })}
             </div>
-          )}
-        </div>
+          )
+        ) : (
+          <div className="flex h-full w-full items-center justify-center gap-2">
+            <p className="text-sm font-bold">Loading</p>
+            <div className="h-5 w-5 animate-spin rounded-full border-t-2 border-black" />
+          </div>
+        )}
       </div>
     </div>
   );

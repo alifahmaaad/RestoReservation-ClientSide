@@ -11,7 +11,6 @@ const User = () => {
   );
   const navigate = useNavigate();
   const [users, setUsers] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setError] = useState([]);
   useEffect(() => {
     if (dataUser != "" && token != "") {

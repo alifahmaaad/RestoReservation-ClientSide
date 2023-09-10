@@ -101,7 +101,7 @@ const UpdateReservation = () => {
           <p className="text-3xl font-bold">
             RR<b className="text-[#FFB100]">.</b>
           </p>
-          <p className="font-mono font-bold">RestoReserve</p>
+          <p className="font-mono font-bold">RestoReservation</p>
         </div>
         {isLoading && <Loading />}
         <div className="flex w-full flex-col items-center justify-center sm:max-w-7xl">
@@ -119,7 +119,7 @@ const UpdateReservation = () => {
                 className="rounded-md border p-2 px-4"
                 placeholder="username"
                 name="username"
-                value={dataUser.username}
+                value={reservationData.user.username}
                 disabled
               />
               <label htmlFor="restaurantname">Restaurant Name</label>

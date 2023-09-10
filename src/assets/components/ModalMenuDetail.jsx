@@ -21,7 +21,7 @@ const ModalMenuDetail = ({ open, func, dataMenu, dataResto }) => {
             <p className="text-3xl font-bold">
               RR<b className="text-[#FFB100]">.</b>
             </p>
-            <p className="font-mono font-bold">RestoReserve</p>
+            <p className="font-mono font-bold">RestoReservation</p>
           </div>
           <div className="flex h-full w-full flex-col items-center justify-center py-10 sm:max-w-7xl">
             <p className="py-4 font-serif font-bold ">Menu Details</p>
@@ -35,20 +35,18 @@ const ModalMenuDetail = ({ open, func, dataMenu, dataResto }) => {
                 dataUser.role == "Restaurant_Admin" &&
                 dataResto.userOwner.id == dataUser.id && (
                   <div className="flex gap-5">
-                    <a
-                      href=""
+                    <button
                       onClick={() => navigate("/menu/update/" + dataMenu.id)}
                       className="font-mono text-[#FFB100] hover:drop-shadow-lg"
                     >
                       Edit Menu
-                    </a>
-                    <a
-                      href=""
+                    </button>
+                    <button
                       onClick={() => navigate("/menu/delete/" + dataMenu.id)}
                       className="font-mono text-[#e52535] hover:drop-shadow-lg"
                     >
                       Delete Menu
-                    </a>
+                    </button>
                   </div>
                 )}
             </div>

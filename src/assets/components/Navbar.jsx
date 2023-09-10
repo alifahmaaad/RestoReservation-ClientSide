@@ -30,7 +30,7 @@ const Navbar = () => {
               <p className="text-3xl font-bold">
                 RR<b className="text-[#FFB100]">.</b>
               </p>
-              <p className="font-mono font-bold">RestoReserve</p>
+              <p className="font-mono font-bold">RestoReservation</p>
             </a>
             <ul className="flex items-center gap-5 px-5">
               <li

@@ -39,8 +39,8 @@ const Reservations = () => {
       .then((res) => {
         if (res.data.payload != null) {
           res.data.payload.length == undefined || res.data.payload.length > 0
-            ? setRestaurantData(res.data.payload)
-            : res.data.payload.length == 0 && setRestaurantData(null);
+            ? setReservations(res.data.payload)
+            : res.data.payload.length == 0 && setReservations(null);
         }
       })
       .catch((e) => {

@@ -56,7 +56,7 @@ const Login = () => {
           <p className="text-3xl font-bold">
             RR<b className="text-[#FFB100]">.</b>
           </p>
-          <p className="font-mono font-bold">RestoReserve</p>
+          <p className="font-mono font-bold">RestoReservation</p>
         </div>
         {isLoading && <Loading />}
         <div className="flex w-full flex-col items-center justify-center ">
@@ -86,7 +86,9 @@ const Login = () => {
                 id="showPass"
                 className="checked:accent-[#FFB100]"
               />
-              <label for="showPass">Show Password</label>
+              <label for="showPass" htmlFor="showPass">
+                Show Password
+              </label>
             </div>
             <button
               className="rounded-full bg-[#FFB100] py-3 text-white"

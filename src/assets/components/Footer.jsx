@@ -10,7 +10,7 @@ const Footer = () => {
             <p className="text-3xl font-bold">
               RR<b className="text-[#FFB100]">.</b>
             </p>
-            <p className="font-mono font-bold">RestoReserve</p>
+            <p className="font-mono font-bold">RestoReservation</p>
           </div>
           <div className="mt-20 flex items-center justify-center py-4 sm:px-20">
             <div className="flex flex-col justify-center gap-3 px-4 text-white">
