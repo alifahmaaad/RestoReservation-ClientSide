@@ -21,7 +21,7 @@ const ModalMenuDetail = ({ open, func, dataMenu, dataResto }) => {
             <p className="text-3xl font-bold">
               RR<b className="text-[#FFB100]">.</b>
             </p>
-            <p className="font-mono font-bold">RestoReserve</p>
+            <p className="font-mono font-bold">RestoReservation</p>
           </div>
           <div className="flex h-full w-full flex-col items-center justify-center py-10 sm:max-w-7xl">
             <p className="py-4 font-serif font-bold ">Menu Details</p>
