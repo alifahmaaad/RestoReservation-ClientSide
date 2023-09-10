@@ -43,8 +43,9 @@ const DeleteReservation = () => {
   };
   return (
     <>
+      <SuccessLabel successMsg={successMsg} />
       <ErrorLabel errorMsg={errorMsg} func={() => navigate(-1)} />
-      <div className="flex h-screen  w-screen items-center justify-center gap-2">
+      <div className="flex h-screen  w-full items-center justify-center gap-2">
         <p className="text-sm font-bold">Deleting</p>
         <div className="h-5 w-5 animate-spin rounded-full border-t-2 border-black" />
       </div>

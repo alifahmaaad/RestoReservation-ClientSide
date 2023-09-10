@@ -111,7 +111,9 @@ const Register = ({ role }) => {
                 id="showPass"
                 className="checked:accent-[#FFB100]"
               />
-              <label for="showPass">Show Password</label>
+              <label for="showPass" htmlFor="showPass">
+                Show Password
+              </label>
             </div>
             <button
               className="rounded-full bg-[#FFB100] py-3 text-white"

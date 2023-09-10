@@ -72,15 +72,14 @@ const ReservationCard = ({ reservationData, func }) => {
         </div>
         <div className="flex gap-5">
           {dataUser.role != "Restaurant_Admin" ? (
-            <a
+            <button
               className="font-mono text-[#FFB100] hover:drop-shadow-lg"
               onClick={() => {
                 navigate(`/reservation/update/${reservationData.id}`);
               }}
-              href=""
             >
               Edit
-            </a>
+            </button>
           ) : (
             <>
               <button
@@ -97,15 +96,14 @@ const ReservationCard = ({ reservationData, func }) => {
               </button>
             </>
           )}
-          <a
+          <button
             className="font-mono text-[#e52535] hover:drop-shadow-lg"
             onClick={() => {
               navigate(`/reservation/delete/${reservationData.id}`);
             }}
-            href=""
           >
             Delete
-          </a>
+          </button>
           <button
             className="font-mono text-[#FFB100] hover:drop-shadow-lg"
             onClick={() => SetIsOpen(!isOpen)}

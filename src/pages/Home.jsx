@@ -7,9 +7,10 @@ import ErrorLabel from "../assets/components/ErrorLabel";
 const Home = () => {
   const [restaurants, setRestaurants] = useState(null);
   const [errorMsg, setError] = useState([]);
+  const [searchText, setSearchText] = useState("");
   useEffect(() => {
     getRestaurants();
-  }, []);
+  }, [searchText]);
   const getRestaurants = async () => {
     await axios
       .get(`${import.meta.env.VITE_HOST_URL}/api/restaurant/all`)
@@ -48,6 +49,7 @@ const Home = () => {
             type="text"
             placeholder="Filter Search"
             className="h-full w-full rounded-full px-10 focus:outline-none"
+            onChange={(e) => setSearchText(e.target.value)}
           />
         </div>
         <div className="absolute bottom-0 left-0 right-0 top-0 -z-10 w-full overflow-hidden rounded-2xl opacity-70">
@@ -71,9 +73,11 @@ const Home = () => {
             <p>No restaurant Found</p>
           ) : (
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-10 lg:grid-cols-4 ">
-              {Object.entries(restaurants).map((restaurant, key) => {
-                return <RestoCard dataResto={restaurant[1]} key={key} />;
-              })}
+              {Object.entries(restaurants)
+                .filter((resto) => resto[1].name.includes(searchText))
+                .map((restaurant, key) => {
+                  return <RestoCard dataResto={restaurant[1]} key={key} />;
+                })}
             </div>
           )
         ) : (

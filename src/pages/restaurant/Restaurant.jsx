@@ -9,6 +9,8 @@ import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import ErrorLabel from "../../assets/components/ErrorLabel";
+import { useSelector } from "react-redux";
+import MenuLabel from "../../assets/components/AddMenulabel";
 
 const Restaurant = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -17,6 +19,7 @@ const Restaurant = () => {
   const [menusData, setMenusData] = useState(null);
   const [errorMsg, setError] = useState([]);
   const navigate = useNavigate();
+  const { dataUser } = useSelector((state) => state.dataUserResponseRedux);
   useEffect(() => {
     getRestaurant();
   }, []);
@@ -51,7 +54,7 @@ const Restaurant = () => {
         if (res.data.payload != null) {
           res.data.payload.length == undefined || res.data.payload.length > 0
             ? setMenusData(res.data.payload)
-            : res.data.payload.length == 0 && setMenusData(null);
+            : res.data.payload.length == 0 && setMenusData(1);
         }
       })
       .catch((e) => {
@@ -91,7 +94,11 @@ const Restaurant = () => {
                 <p className="text-normal font-semibold md:text-2xl " title="">
                   {restaurantData.name}
                 </p>
-                <ReservationLabel />
+                {dataUser.role == "Customer" ? (
+                  <ReservationLabel idResto={restaurantData.id} />
+                ) : (
+                  <MenuLabel />
+                )}
               </div>
               <div className="my-2 flex flex-wrap gap-2">
                 <p className="flex items-center text-xs">Tags:</p>
@@ -121,17 +128,23 @@ const Restaurant = () => {
             </p>
           </div>
           <div className="mx-auto w-[calc(100%_-_48px)] max-w-screen-xl py-6 md:w-[calc(100%_-_64px)] lg:pb-16">
-            <div className="grid grid-cols-2 justify-items-center gap-6 md:grid-cols-3 md:gap-10 lg:grid-cols-4">
-              {Object.entries(menusData).map((menu, key) => {
-                return (
-                  <MenuCard
-                    dataMenu={menu[1]}
-                    key={key}
-                    dataResto={restaurantData}
-                  />
-                );
-              })}
-            </div>
+            {menusData == 1 ? (
+              <div className="flex w-full justify-center">
+                No Menu in this Restautant
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 justify-items-center gap-6 md:grid-cols-3 md:gap-10 lg:grid-cols-4">
+                {Object.entries(menusData).map((menu, key) => {
+                  return (
+                    <MenuCard
+                      dataMenu={menu[1]}
+                      key={key}
+                      dataResto={restaurantData}
+                    />
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
       ) : (

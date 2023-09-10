@@ -35,20 +35,18 @@ const ModalMenuDetail = ({ open, func, dataMenu, dataResto }) => {
                 dataUser.role == "Restaurant_Admin" &&
                 dataResto.userOwner.id == dataUser.id && (
                   <div className="flex gap-5">
-                    <a
-                      href=""
+                    <button
                       onClick={() => navigate("/menu/update/" + dataMenu.id)}
                       className="font-mono text-[#FFB100] hover:drop-shadow-lg"
                     >
                       Edit Menu
-                    </a>
-                    <a
-                      href=""
+                    </button>
+                    <button
                       onClick={() => navigate("/menu/delete/" + dataMenu.id)}
                       className="font-mono text-[#e52535] hover:drop-shadow-lg"
                     >
                       Delete Menu
-                    </a>
+                    </button>
                   </div>
                 )}
             </div>

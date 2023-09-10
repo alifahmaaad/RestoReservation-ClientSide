@@ -5,7 +5,7 @@ import ErrorLabel from "../../assets/components/ErrorLabel";
 import { useSelector } from "react-redux";
 import SuccessLabel from "../../assets/components/SuccessLabel";
 
-const DeleteMenu = () => {
+const DeleteUser = () => {
   const param = useParams();
   const [errorMsg, setError] = useState([]);
   const [successMsg, setSuccess] = useState([]);
@@ -19,9 +19,7 @@ const DeleteMenu = () => {
   const handleDelete = async () => {
     await axios
       .delete(
-        `${import.meta.env.VITE_HOST_URL}/api/menu/restaurant/delete/${
-          param.id
-        }`,
+        `${import.meta.env.VITE_HOST_URL}/api/user/appadmin/delete/${param.id}`,
         {
           headers: {
             Authorization: "Bearer " + token,
@@ -30,14 +28,13 @@ const DeleteMenu = () => {
       )
       .then((res) => {
         setSuccess([...successMsg, res.data.message]);
-        if (res.data.status) {
-          setTimeout(() => {
+        setTimeout(() => {
+          if (res.data.status) {
             navigate(-1);
-          }, 1500);
-        }
+          }
+        }, 1500);
       })
       .catch((e) => {
-        console.log(e);
         if (e.code == "ERR_NETWORK") {
           setError([...errorMsg, e.message]);
         } else if (
@@ -52,7 +49,7 @@ const DeleteMenu = () => {
     <>
       <SuccessLabel successMsg={successMsg} />
       <ErrorLabel errorMsg={errorMsg} func={() => navigate(-1)} />
-      <div className="flex h-screen  w-full items-center justify-center gap-2">
+      <div className="flex h-screen  w-screen items-center justify-center gap-2">
         <p className="text-sm font-bold">Deleting</p>
         <div className="h-5 w-5 animate-spin rounded-full border-t-2 border-black" />
       </div>
@@ -60,4 +57,4 @@ const DeleteMenu = () => {
   );
 };
 
-export default DeleteMenu;
+export default DeleteUser;
