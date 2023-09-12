@@ -109,7 +109,7 @@ const Restaurant = () => {
                 {dataUser.role == "Customer" ? (
                   <ReservationLabel idResto={restaurantData.id} />
                 ) : (
-                  <div className="fle-col flex gap-2">
+                  <div className="flex flex-col gap-2 md:flex-row">
                     <MenuLabel />
                     <EditRestaurantLabel
                       idResto={

@@ -4,7 +4,7 @@ const EditRestaurantLabel = ({ idResto }) => {
   const navigate = useNavigate();
   return (
     <button
-      className="flex min-w-[8rem] items-center rounded-full bg-[#ffedc3] px-2 py-1 shadow-md duration-500 hover:scale-110 hover:shadow-lg"
+      className="flex h-fit min-w-[8rem] items-center rounded-full bg-[#ffedc3] px-2 py-1 shadow-md duration-500 hover:scale-110 hover:shadow-lg"
       onClick={() =>
         idResto
           ? navigate("/resto/update/" + idResto)
