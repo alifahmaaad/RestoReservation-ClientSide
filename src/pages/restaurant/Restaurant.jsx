@@ -28,6 +28,7 @@ const Restaurant = () => {
   };
   useEffect(() => {
     getRestaurant();
+    console.log(dataUser == "");
   }, []);
   const getRestaurant = async () => {
     axios
@@ -109,14 +110,16 @@ const Restaurant = () => {
                 {dataUser.role == "Customer" ? (
                   <ReservationLabel idResto={restaurantData.id} />
                 ) : (
-                  <div className="flex flex-col gap-2 md:flex-row">
-                    <MenuLabel />
-                    <EditRestaurantLabel
-                      idResto={
-                        dataUser.role == "App_Admin" && restaurantData.id
-                      }
-                    />
-                  </div>
+                  dataUser != "" && (
+                    <div className="flex flex-col gap-2 md:flex-row">
+                      <MenuLabel />
+                      <EditRestaurantLabel
+                        idResto={
+                          dataUser.role == "App_Admin" && restaurantData.id
+                        }
+                      />
+                    </div>
+                  )
                 )}
               </div>
               <div className="my-2 flex flex-wrap gap-2">
