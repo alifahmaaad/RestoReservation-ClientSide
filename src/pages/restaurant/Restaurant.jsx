@@ -12,6 +12,7 @@ import ErrorLabel from "../../assets/components/ErrorLabel";
 import { useSelector } from "react-redux";
 import MenuLabel from "../../assets/components/AddMenulabel";
 import EditRestaurantLabel from "../../assets/components/EditRestaurantLabel";
+import MapModal from "../../assets/components/MapModal";
 
 const Restaurant = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -21,6 +22,10 @@ const Restaurant = () => {
   const [errorMsg, setError] = useState([]);
   const navigate = useNavigate();
   const { dataUser } = useSelector((state) => state.dataUserResponseRedux);
+  const [modalOpen, setModalOpen] = useState(false);
+  const handleModalOpen = () => {
+    setModalOpen(!modalOpen);
+  };
   useEffect(() => {
     getRestaurant();
   }, []);
@@ -71,12 +76,18 @@ const Restaurant = () => {
         }
       });
   };
-  const handleDelete = () => {};
   return (
     <>
       <ErrorLabel errorMsg={errorMsg} func={() => setError([])} />
       {restaurantData != null && menusData != null ? (
         <div className="h-full">
+          {modalOpen && (
+            <MapModal
+              open={true}
+              func={handleModalOpen}
+              dataResto={restaurantData}
+            />
+          )}
           <div className="mx-auto flex w-[calc(100%_-_20px)] max-w-screen-xl items-center py-2 md:w-[calc(100%_-_64px)]">
             <div className="mx-2 flex aspect-square h-28 w-28 min-w-[7rem] rounded-xl object-cover md:h-32 md:w-32 md:justify-center lg:h-44 lg:w-44">
               <figure>
@@ -117,7 +128,10 @@ const Restaurant = () => {
               <p className="mb-2 line-clamp-3 text-xs md:text-sm" title="">
                 {restaurantData.description}
               </p>
-              <div className="flex items-center gap-1">
+              <button
+                className="flex items-center gap-1"
+                onClick={handleModalOpen}
+              >
                 {isOpen ? <OpenLabel /> : <CloseLabel />}
                 <FontAwesomeIcon icon={faMapMarkerAlt} />
                 <p
@@ -126,7 +140,7 @@ const Restaurant = () => {
                 >
                   {restaurantData.address}
                 </p>
-              </div>
+              </button>
             </div>
           </div>
           <div className="flex flex-col items-center justify-center py-4 md:py-10">
