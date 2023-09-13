@@ -12,6 +12,7 @@ const CreateRestaurant = () => {
   const [tags, setTags] = useState([]);
   const [tagText, setTagText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isStillChecking, setIsStillChecking] = useState(true);
   const [errorMsg, setError] = useState([]);
   const [successMsg, setSuccess] = useState([]);
   const [previewIMG, setPreviewIMG] = useState();
@@ -37,10 +38,12 @@ const CreateRestaurant = () => {
             ["You already have Restaurant, Navigate to home"],
           ]);
           setTimeout(() => {
+            setIsStillChecking(false);
             navigate("/");
           }, 1500);
+        } else {
+          setIsStillChecking(false);
         }
-        console.log(res);
       })
       .catch((e) => {
         if (typeof e.response.data != "object" && e.response.status == 403) {
@@ -129,91 +132,95 @@ const CreateRestaurant = () => {
           <p className="py-4 font-serif text-3xl font-bold text-[#FFB100]">
             Restaurant Register
           </p>
-          <form
-            className="flex h-full w-full flex-col justify-center gap-3 px-10"
-            onSubmit={handleSubmit}
-          >
-            <label htmlFor="name">Restaurant Name</label>
-            <input
-              type="text"
-              className="rounded-md border p-2 px-4"
-              placeholder="Restorant Name"
-              name="name"
-            />
-            <label htmlFor="tags">Tags</label>
-            <div className="flex">
+          {isStillChecking ? (
+            <Loading />
+          ) : (
+            <form
+              className="flex h-full w-full flex-col justify-center gap-3 px-10"
+              onSubmit={handleSubmit}
+            >
+              <label htmlFor="name">Restaurant Name</label>
               <input
                 type="text"
-                className="w-full rounded-md border p-2 px-4"
-                placeholder="Add Tags"
-                name="tags"
-                onChange={(val) => setTagText(val.target.value)}
-                value={tagText}
+                className="rounded-md border p-2 px-4"
+                placeholder="Restorant Name"
+                name="name"
               />
-              <button
-                className="flex h-full w-fit items-center justify-center rounded-md border bg-[#FFB100] px-4 font-bold text-white"
-                onClick={() => {
-                  if (tagText != "") {
-                    setTags([...tags, tagText]);
-                    setTagText("");
-                  }
-                }}
-                type="button"
-              >
-                +
-              </button>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {tags.map((val, key) => (
-                <TagLabel
-                  key={key}
-                  label={val}
-                  isDeletable={true}
-                  func={handleDeleteTag}
-                  index={key}
+              <label htmlFor="tags">Tags</label>
+              <div className="flex">
+                <input
+                  type="text"
+                  className="w-full rounded-md border p-2 px-4"
+                  placeholder="Add Tags"
+                  name="tags"
+                  onChange={(val) => setTagText(val.target.value)}
+                  value={tagText}
                 />
-              ))}
-            </div>
-            <label htmlFor="address">Address</label>
-            <input
-              type="text"
-              className="rounded-md border p-2 px-4"
-              placeholder="Address"
-              name="address"
-            />
-            <label htmlFor="location">Location</label>
-            <MapLeaflet func={handleLocation} />
-            <label htmlFor="photo">Restaurant Photo</label>
-            <input
-              type="file"
-              className="h-fit rounded-md border p-2 px-4"
-              placeholder="photo"
-              name="photo"
-              accept="image/*"
-              onChange={(e) =>
-                setPreviewIMG(URL.createObjectURL(e.target.files[0]))
-              }
-            />
-            {previewIMG && (
-              <div id="previewIMG">
-                <label>Preview Image :</label>
-                <figure className="flex aspect-square h-28 w-28 min-w-[7rem] rounded-xl object-cover md:h-32 md:w-32 md:justify-center lg:h-44 lg:w-44">
-                  <img
-                    src={previewIMG}
-                    className="h-full w-full rounded-xl object-cover"
-                    loading="lazy"
-                    alt=""
-                  />
-                </figure>
+                <button
+                  className="flex h-full w-fit items-center justify-center rounded-md border bg-[#FFB100] px-4 font-bold text-white"
+                  onClick={() => {
+                    if (tagText != "") {
+                      setTags([...tags, tagText]);
+                      setTagText("");
+                    }
+                  }}
+                  type="button"
+                >
+                  +
+                </button>
               </div>
-            )}
-            <button
-              className="rounded-full bg-[#FFB100] py-3 text-white"
-              type="submit"
-            >
-              Register
-            </button>
-          </form>
+              <div className="flex flex-wrap gap-2">
+                {tags.map((val, key) => (
+                  <TagLabel
+                    key={key}
+                    label={val}
+                    isDeletable={true}
+                    func={handleDeleteTag}
+                    index={key}
+                  />
+                ))}
+              </div>
+              <label htmlFor="address">Address</label>
+              <input
+                type="text"
+                className="rounded-md border p-2 px-4"
+                placeholder="Address"
+                name="address"
+              />
+              <label htmlFor="location">Location</label>
+              <MapLeaflet func={handleLocation} />
+              <label htmlFor="photo">Restaurant Photo</label>
+              <input
+                type="file"
+                className="h-fit rounded-md border p-2 px-4"
+                placeholder="photo"
+                name="photo"
+                accept="image/*"
+                onChange={(e) =>
+                  setPreviewIMG(URL.createObjectURL(e.target.files[0]))
+                }
+              />
+              {previewIMG && (
+                <div id="previewIMG">
+                  <label>Preview Image :</label>
+                  <figure className="flex aspect-square h-28 w-28 min-w-[7rem] rounded-xl object-cover md:h-32 md:w-32 md:justify-center lg:h-44 lg:w-44">
+                    <img
+                      src={previewIMG}
+                      className="h-full w-full rounded-xl object-cover"
+                      loading="lazy"
+                      alt=""
+                    />
+                  </figure>
+                </div>
+              )}
+              <button
+                className="rounded-full bg-[#FFB100] py-3 text-white"
+                type="submit"
+              >
+                Register
+              </button>
+            </form>
+          )}
         </div>
       </div>
     </div>
