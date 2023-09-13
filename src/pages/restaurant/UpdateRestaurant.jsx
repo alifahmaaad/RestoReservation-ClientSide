@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import TagLabel from "../../assets/components/TagLabel";
+import TagLabel from "../../assets/components/Label/TagLabel";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import MapLeaflet from "../../assets/components/MapLeaflet";
-import ErrorLabel from "../../assets/components/ErrorLabel";
-import SuccessLabel from "../../assets/components/SuccessLabel";
+import ErrorLabel from "../../assets/components/Label/ErrorLabel";
+import SuccessLabel from "../../assets/components/Label/SuccessLabel";
 import Loading from "../../assets/components/Loading";
 
 const UpdateRestaurant = () => {
@@ -137,7 +137,7 @@ const UpdateRestaurant = () => {
     setDataResto({ ...restoData, location: location });
   };
   return (
-    <div className="relative flex min-h-[calc(100svh-55px)] items-center justify-center bg-white py-20">
+    <div className="relative flex min-h-[calc(100svh-55px)] items-center justify-center bg-white md:py-20">
       <ErrorLabel errorMsg={errorMsg} func={() => setError([])} />
       <SuccessLabel successMsg={successMsg} />
       <div className="relative z-10 flex h-full w-full bg-white px-4 py-20 sm:max-w-[45rem] sm:rounded-lg sm:shadow-xl">

@@ -1,8 +1,8 @@
 import { useState } from "react";
-import ModalReservationDetail from "./ModalReservationDetails";
-import Approve from "./StatusReservation/Approve";
-import Decline from "./StatusReservation/Decline";
-import Pending from "./StatusReservation/Pending";
+import ModalReservationDetail from "../Modal/ModalReservationDetails";
+import Approve from "../StatusReservation/Approve";
+import Decline from "../StatusReservation/Decline";
+import Pending from "../StatusReservation/Pending";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 

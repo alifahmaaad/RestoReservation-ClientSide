@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import ReservationCard from "../../assets/components/ReservationCard";
+import ReservationCard from "../../assets/components/Card/ReservationCard";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import ErrorLabel from "../../assets/components/ErrorLabel";
-import SuccessLabel from "../../assets/components/SuccessLabel";
+import ErrorLabel from "../../assets/components/Label/ErrorLabel";
+import SuccessLabel from "../../assets/components/Label/SuccessLabel";
 
 const Reservations = () => {
   const [errorMsg, setError] = useState([]);

@@ -1,8 +1,8 @@
 import headerImg from "../assets/img/img.jpg";
-import RestoCard from "../assets/components/RestoCard";
+import RestoCard from "../assets/components/Card/RestoCard";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import ErrorLabel from "../assets/components/ErrorLabel";
+import ErrorLabel from "../assets/components/Label/ErrorLabel";
 
 const Home = () => {
   const [restaurants, setRestaurants] = useState(null);
@@ -70,7 +70,9 @@ const Home = () => {
       <div className="mx-auto h-full w-[calc(100%_-_48px)] max-w-screen-xl py-6 md:w-[calc(100%_-_64px)] lg:pb-16">
         {restaurants != null ? (
           restaurants == 1 ? (
-            <p>No restaurant Found</p>
+            <p className="flex items-center justify-center py-10">
+              No restaurant Found
+            </p>
           ) : (
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-10 lg:grid-cols-4 ">
               {Object.entries(restaurants)
