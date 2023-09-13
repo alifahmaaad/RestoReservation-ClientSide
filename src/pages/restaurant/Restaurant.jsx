@@ -28,7 +28,6 @@ const Restaurant = () => {
   };
   useEffect(() => {
     getRestaurant();
-    console.log(dataUser == "");
   }, []);
   const getRestaurant = async () => {
     axios

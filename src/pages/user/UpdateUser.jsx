@@ -78,7 +78,11 @@ const UpdateUser = () => {
       .then((res) => {
         if (res.data.status) {
           setSuccess([...successMsg, res.data.message]);
-          if (param.id == undefined || param.id == null) {
+          if (
+            param.id == undefined ||
+            param.id == null ||
+            param.id == user.id
+          ) {
             setSuccess([...successMsg, ["User Updated You must Re-Login"]]);
             dispatch(logout());
             setTimeout(() => {
