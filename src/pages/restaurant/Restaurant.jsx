@@ -154,7 +154,7 @@ const Restaurant = () => {
           </div>
           <div className="mx-auto w-[calc(100%_-_48px)] max-w-screen-xl py-6 md:w-[calc(100%_-_64px)] lg:pb-16">
             {menusData == 1 ? (
-              <div className="flex w-full justify-center">
+              <div className="flex w-full justify-center py-20">
                 No Menu in this Restautant
               </div>
             ) : (

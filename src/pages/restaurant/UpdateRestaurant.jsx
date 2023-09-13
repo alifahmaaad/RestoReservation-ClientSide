@@ -137,7 +137,7 @@ const UpdateRestaurant = () => {
     setDataResto({ ...restoData, location: location });
   };
   return (
-    <div className="relative flex min-h-[calc(100svh-55px)] items-center justify-center bg-white py-20">
+    <div className="relative flex min-h-[calc(100svh-55px)] items-center justify-center bg-white md:py-20">
       <ErrorLabel errorMsg={errorMsg} func={() => setError([])} />
       <SuccessLabel successMsg={successMsg} />
       <div className="relative z-10 flex h-full w-full bg-white px-4 py-20 sm:max-w-[45rem] sm:rounded-lg sm:shadow-xl">

@@ -42,7 +42,6 @@ const CreateRestaurant = () => {
             navigate("/");
           }, 1500);
         } else {
-          setIsStillChecking(false);
         }
       })
       .catch((e) => {
@@ -50,6 +49,8 @@ const CreateRestaurant = () => {
           navigate("/login");
         } else if (e.code == "ERR_NETWORK") {
           setError([...errorMsg, e.message]);
+        } else {
+          setIsStillChecking(false);
         }
       });
   };

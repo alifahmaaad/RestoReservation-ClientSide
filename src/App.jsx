@@ -40,6 +40,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register role="Customer" />} />
         <Route path="/user/update/:id" element={<UpdateUser />} />
+        <Route path="/user/update/" element={<UpdateUser />} />
         <Route path="/user/delete/:id" element={<DeleteUser />} />
         <Route
           path="/register/resto"
