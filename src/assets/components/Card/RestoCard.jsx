@@ -1,4 +1,4 @@
-import TagLabel from "./Label/TagLabel";
+import TagLabel from "../Label/TagLabel";
 
 const RestoCard = ({ dataResto }) => {
   return (
