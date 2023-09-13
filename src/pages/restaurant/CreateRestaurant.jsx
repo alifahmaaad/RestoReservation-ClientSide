@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import TagLabel from "../../assets/components/TagLabel";
+import TagLabel from "../../assets/components/Label/TagLabel";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import ErrorLabel from "../../assets/components/ErrorLabel";
-import SuccessLabel from "../../assets/components/SuccessLabel";
+import ErrorLabel from "../../assets/components/Label/ErrorLabel";
+import SuccessLabel from "../../assets/components/Label/SuccessLabel";
 import MapLeaflet from "../../assets/components/MapLeaflet";
 import Loading from "../../assets/components/Loading";
 

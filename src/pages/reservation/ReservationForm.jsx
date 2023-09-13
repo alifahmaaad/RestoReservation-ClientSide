@@ -2,8 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import ErrorLabel from "../../assets/components/ErrorLabel";
-import SuccessLabel from "../../assets/components/SuccessLabel";
+import ErrorLabel from "../../assets/components/Label/ErrorLabel";
+import SuccessLabel from "../../assets/components/Label/SuccessLabel";
 import Loading from "../../assets/components/Loading";
 
 const ReservationForm = () => {

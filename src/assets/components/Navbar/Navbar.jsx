@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../redux/slices/dataUserResponse";
+import { logout } from "../../../redux/slices/dataUserResponse";
 const Navbar = () => {
   const [navbar, setNavbar] = useState(false);
   const dispatch = useDispatch();

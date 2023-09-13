@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import ErrorLabel from "../../assets/components/ErrorLabel";
+import ErrorLabel from "../../assets/components/Label/ErrorLabel";
 import { useSelector } from "react-redux";
-import SuccessLabel from "../../assets/components/SuccessLabel";
+import SuccessLabel from "../../assets/components/Label/SuccessLabel";
 
 const DeleteUser = () => {
   const param = useParams();

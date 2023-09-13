@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
-import CloseLabel from "../../assets/components/CloseLabel";
-import OpenLabel from "../../assets/components/OpenLabel";
-import TagLabel from "../../assets/components/TagLabel";
-import MenuCard from "../../assets/components/MenuCard";
-import ReservationLabel from "../../assets/components/ReservationLabel";
+import CloseLabel from "../../assets/components/Label/CloseLabel";
+import OpenLabel from "../../assets/components/Label/OpenLabel";
+import TagLabel from "../../assets/components/Label/TagLabel";
+import MenuCard from "../../assets/components/Card/MenuCard";
+import ReservationLabel from "../../assets/components/Label/ReservationLabel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import ErrorLabel from "../../assets/components/ErrorLabel";
+import ErrorLabel from "../../assets/components/Label/ErrorLabel";
 import { useSelector } from "react-redux";
-import MenuLabel from "../../assets/components/AddMenulabel";
-import EditRestaurantLabel from "../../assets/components/EditRestaurantLabel";
-import MapModal from "../../assets/components/MapModal";
+import MenuLabel from "../../assets/components/Label/AddMenulabel";
+import EditRestaurantLabel from "../../assets/components/Label/EditRestaurantLabel";
+import MapModal from "../../assets/components/Modal/MapModal";
 
 const Restaurant = () => {
   const [isOpen, setIsOpen] = useState(true);

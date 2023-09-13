@@ -1,8 +1,8 @@
 import headerImg from "../assets/img/img.jpg";
-import RestoCard from "../assets/components/RestoCard";
+import RestoCard from "../assets/components/Card/RestoCard";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import ErrorLabel from "../assets/components/ErrorLabel";
+import ErrorLabel from "../assets/components/Label/ErrorLabel";
 
 const Home = () => {
   const [restaurants, setRestaurants] = useState(null);

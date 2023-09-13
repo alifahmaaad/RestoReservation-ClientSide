@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ModalMenuDetail from "./ModalMenuDetail";
+import ModalMenuDetail from "../Modal/ModalMenuDetail";
 
 const MenuCard = ({ dataMenu, dataResto }) => {
   const [modalOpen, setModalOpen] = useState(false);

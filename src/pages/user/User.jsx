@@ -3,7 +3,7 @@ import UserCard from "../../assets/components/AppAdmin/UserCard";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import ErrorLabel from "../../assets/components/ErrorLabel";
+import ErrorLabel from "../../assets/components/Label/ErrorLabel";
 
 const User = () => {
   const { token, dataUser } = useSelector(

@@ -3,7 +3,7 @@ import Home from "./pages/Home";
 import Restaurant from "./pages/restaurant/Restaurant";
 import Login from "./pages/user/Login";
 import Register from "./pages/user/Register";
-import Navbar from "./assets/components/Navbar";
+import Navbar from "./assets/components/Navbar/Navbar";
 import Footer from "./assets/components/Footer";
 import { useEffect, useState } from "react";
 import Reservations from "./pages/reservation/Reservations";
